@@ -1,0 +1,358 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0105)file:///G:/My%20Drive/Programming/automata/webdocs/GameDev.net%20-%20Algorithmic%20Forays%20Part%204.html -->
+<html xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <title>GameDev.net - Algorithmic Forays Part 4</title>
+  <meta property="og:title" content="Algorithmic Forays Part 4">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="http://www.gamedev.net/reference/articles/article2106.asp">
+    <meta property="og:image" content="../../../images.gamedev.net/icons/gamedev_net.png">
+    <meta property="og:site_name" content="GameDev.net">
+    <meta property="fb:app_id" content="103355463445">
+    <meta property="og:description" content="Continues the exploration of DFAs and NFAs.">
+  <link rel="stylesheet" href="./part04_files/reference.css" type="text/css">
+  <link rel="icon" href="https://archive.gamedev.net/archive/pics/gdicon.png" type="image/png">
+  <script src="./part04_files/all.js.download" async="" crossorigin="anonymous"></script><script type="text/javascript" async="" src="./part04_files/ga.js.download"></script><script src="./part04_files/all.js(1).download" async="" crossorigin="anonymous"></script><script type="text/javascript" async="" src="./part04_files/ga.js(1).download"></script><script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-279474-1']);
+      _gaq.push(['_trackPageview']);
+      (function () {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+</script>
+<script type="text/javascript" src="./part04_files/google_service.js.download"></script> 
+<script type="text/javascript">
+    GS_googleAddAdSenseService("ca-pub-3167291168602081");
+    GS_googleEnableAllServices();
+</script><script src="./part04_files/f.txt"></script><script src="./part04_files/f(1).txt"></script> 
+<script type="text/javascript">
+GA_googleAddSlot("ca-pub-3167291168602081", "Leaderboard_Main");
+GA_googleAddSlot("ca-pub-3167291168602081", "Box_Main");
+</script>
+
+<script type="text/javascript">
+    GA_googleFetchAds();
+</script> 
+<style type="text/css" data-fbcssmodules="css:fb.css.base css:fb.css.dialog css:fb.css.iframewidget css:fb.css.customer_chat_plugin_iframe">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:'lucida grande', tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:'lucida grande', tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_dialog_advanced{border-radius:8px;padding:10px}.fb_dialog_content{background:#fff;color:#373737}.fb_dialog_close_icon{background:url(https://connect.facebook.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{left:5px;right:auto;top:5px}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://connect.facebook.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent}.fb_dialog_close_icon:active{background:url(https://connect.facebook.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://connect.facebook.net/rsrc.php/v3/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{height:100%;left:0;margin:0;overflow:visible;position:absolute;top:-10000px;transform:none;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://connect.facebook.net/rsrc.php/v3/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{background:none;height:auto;min-height:initial;min-width:initial;width:auto}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{clear:both;color:#fff;display:block;font-size:18px;padding-top:20px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .4);bottom:0;left:0;min-height:100%;position:absolute;right:0;top:0;width:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_mobile .fb_dialog_iframe{position:sticky;top:0}.fb_dialog_content .dialog_header{background:linear-gradient(from(#738aba), to(#2c4987));border-bottom:1px solid;border-color:#043b87;box-shadow:white 0 1px 1px -1px inset;color:#fff;font:bold 14px Helvetica, sans-serif;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:linear-gradient(from(#4267B2), to(#2a4887));background-clip:padding-box;border:1px solid #29487d;border-radius:3px;display:inline-block;line-height:18px;margin-top:3px;max-width:85px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{background:none;border:none;color:#fff;font:bold 12px Helvetica, sans-serif;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://connect.facebook.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #4a4a4a;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f5f6f7;border:1px solid #4a4a4a;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://connect.facebook.net/rsrc.php/v3/yD/r/t-wz8gw1xG1.png);background-position:50% 50%;background-repeat:no-repeat;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}
+.fb_mpn_mobile_landing_page_slide_out{animation-duration:200ms;animation-name:fb_mpn_landing_page_slide_out;transition-timing-function:ease-in}.fb_mpn_mobile_landing_page_slide_out_from_left{animation-duration:200ms;animation-name:fb_mpn_landing_page_slide_out_from_left;transition-timing-function:ease-in}.fb_mpn_mobile_landing_page_slide_up{animation-duration:500ms;animation-name:fb_mpn_landing_page_slide_up;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_in{animation-duration:300ms;animation-name:fb_mpn_bounce_in;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_out{animation-duration:300ms;animation-name:fb_mpn_bounce_out;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_out_v2{animation-duration:300ms;animation-name:fb_mpn_fade_out;transition-timing-function:ease-in}.fb_customer_chat_bounce_in_v2{animation-duration:300ms;animation-name:fb_bounce_in_v2;transition-timing-function:ease-in}.fb_customer_chat_bounce_in_from_left{animation-duration:300ms;animation-name:fb_bounce_in_from_left;transition-timing-function:ease-in}.fb_customer_chat_bounce_out_v2{animation-duration:300ms;animation-name:fb_bounce_out_v2;transition-timing-function:ease-in}.fb_customer_chat_bounce_out_from_left{animation-duration:300ms;animation-name:fb_bounce_out_from_left;transition-timing-function:ease-in}.fb_invisible_flow{display:inherit;height:0;overflow-x:hidden;width:0}@keyframes fb_mpn_landing_page_slide_out{0%{margin:0 12px;width:100% - 24px}60%{border-radius:18px}100%{border-radius:50%;margin:0 24px;width:60px}}@keyframes fb_mpn_landing_page_slide_out_from_left{0%{left:12px;width:100% - 24px}60%{border-radius:18px}100%{border-radius:50%;left:12px;width:60px}}@keyframes fb_mpn_landing_page_slide_up{0%{bottom:0;opacity:0}100%{bottom:24px;opacity:1}}@keyframes fb_mpn_bounce_in{0%{opacity:.5;top:100%}100%{opacity:1;top:0}}@keyframes fb_mpn_fade_out{0%{bottom:30px;opacity:1}100%{bottom:0;opacity:0}}@keyframes fb_mpn_bounce_out{0%{opacity:1;top:0}100%{opacity:.5;top:100%}}@keyframes fb_bounce_in_v2{0%{opacity:0;transform:scale(0, 0);transform-origin:bottom right}50%{transform:scale(1.03, 1.03);transform-origin:bottom right}100%{opacity:1;transform:scale(1, 1);transform-origin:bottom right}}@keyframes fb_bounce_in_from_left{0%{opacity:0;transform:scale(0, 0);transform-origin:bottom left}50%{transform:scale(1.03, 1.03);transform-origin:bottom left}100%{opacity:1;transform:scale(1, 1);transform-origin:bottom left}}@keyframes fb_bounce_out_v2{0%{opacity:1;transform:scale(1, 1);transform-origin:bottom right}100%{opacity:0;transform:scale(0, 0);transform-origin:bottom right}}@keyframes fb_bounce_out_from_left{0%{opacity:1;transform:scale(1, 1);transform-origin:bottom left}100%{opacity:0;transform:scale(0, 0);transform-origin:bottom left}}@keyframes slideInFromBottom{0%{opacity:.1;transform:translateY(100%)}100%{opacity:1;transform:translateY(0)}}@keyframes slideInFromBottomDelay{0%{opacity:0;transform:translateY(100%)}97%{opacity:0;transform:translateY(100%)}100%{opacity:1;transform:translateY(0)}}</style><style type="text/css" data-fbcssmodules="css:fb.css.base css:fb.css.dialog css:fb.css.iframewidget css:fb.css.customer_chat_plugin_iframe">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:'lucida grande', tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:'lucida grande', tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_dialog_advanced{border-radius:8px;padding:10px}.fb_dialog_content{background:#fff;color:#373737}.fb_dialog_close_icon{background:url(https://connect.facebook.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{left:5px;right:auto;top:5px}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://connect.facebook.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent}.fb_dialog_close_icon:active{background:url(https://connect.facebook.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://connect.facebook.net/rsrc.php/v3/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{height:100%;left:0;margin:0;overflow:visible;position:absolute;top:-10000px;transform:none;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://connect.facebook.net/rsrc.php/v3/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{background:none;height:auto;min-height:initial;min-width:initial;width:auto}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{clear:both;color:#fff;display:block;font-size:18px;padding-top:20px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .4);bottom:0;left:0;min-height:100%;position:absolute;right:0;top:0;width:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_mobile .fb_dialog_iframe{position:sticky;top:0}.fb_dialog_content .dialog_header{background:linear-gradient(from(#738aba), to(#2c4987));border-bottom:1px solid;border-color:#043b87;box-shadow:white 0 1px 1px -1px inset;color:#fff;font:bold 14px Helvetica, sans-serif;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:linear-gradient(from(#4267B2), to(#2a4887));background-clip:padding-box;border:1px solid #29487d;border-radius:3px;display:inline-block;line-height:18px;margin-top:3px;max-width:85px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{background:none;border:none;color:#fff;font:bold 12px Helvetica, sans-serif;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://connect.facebook.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #4a4a4a;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f5f6f7;border:1px solid #4a4a4a;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://connect.facebook.net/rsrc.php/v3/yD/r/t-wz8gw1xG1.png);background-position:50% 50%;background-repeat:no-repeat;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}
+.fb_mpn_mobile_landing_page_slide_out{animation-duration:200ms;animation-name:fb_mpn_landing_page_slide_out;transition-timing-function:ease-in}.fb_mpn_mobile_landing_page_slide_out_from_left{animation-duration:200ms;animation-name:fb_mpn_landing_page_slide_out_from_left;transition-timing-function:ease-in}.fb_mpn_mobile_landing_page_slide_up{animation-duration:500ms;animation-name:fb_mpn_landing_page_slide_up;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_in{animation-duration:300ms;animation-name:fb_mpn_bounce_in;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_out{animation-duration:300ms;animation-name:fb_mpn_bounce_out;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_out_v2{animation-duration:300ms;animation-name:fb_mpn_fade_out;transition-timing-function:ease-in}.fb_customer_chat_bounce_in_v2{animation-duration:300ms;animation-name:fb_bounce_in_v2;transition-timing-function:ease-in}.fb_customer_chat_bounce_in_from_left{animation-duration:300ms;animation-name:fb_bounce_in_from_left;transition-timing-function:ease-in}.fb_customer_chat_bounce_out_v2{animation-duration:300ms;animation-name:fb_bounce_out_v2;transition-timing-function:ease-in}.fb_customer_chat_bounce_out_from_left{animation-duration:300ms;animation-name:fb_bounce_out_from_left;transition-timing-function:ease-in}.fb_invisible_flow{display:inherit;height:0;overflow-x:hidden;width:0}@keyframes fb_mpn_landing_page_slide_out{0%{margin:0 12px;width:100% - 24px}60%{border-radius:18px}100%{border-radius:50%;margin:0 24px;width:60px}}@keyframes fb_mpn_landing_page_slide_out_from_left{0%{left:12px;width:100% - 24px}60%{border-radius:18px}100%{border-radius:50%;left:12px;width:60px}}@keyframes fb_mpn_landing_page_slide_up{0%{bottom:0;opacity:0}100%{bottom:24px;opacity:1}}@keyframes fb_mpn_bounce_in{0%{opacity:.5;top:100%}100%{opacity:1;top:0}}@keyframes fb_mpn_fade_out{0%{bottom:30px;opacity:1}100%{bottom:0;opacity:0}}@keyframes fb_mpn_bounce_out{0%{opacity:1;top:0}100%{opacity:.5;top:100%}}@keyframes fb_bounce_in_v2{0%{opacity:0;transform:scale(0, 0);transform-origin:bottom right}50%{transform:scale(1.03, 1.03);transform-origin:bottom right}100%{opacity:1;transform:scale(1, 1);transform-origin:bottom right}}@keyframes fb_bounce_in_from_left{0%{opacity:0;transform:scale(0, 0);transform-origin:bottom left}50%{transform:scale(1.03, 1.03);transform-origin:bottom left}100%{opacity:1;transform:scale(1, 1);transform-origin:bottom left}}@keyframes fb_bounce_out_v2{0%{opacity:1;transform:scale(1, 1);transform-origin:bottom right}100%{opacity:0;transform:scale(0, 0);transform-origin:bottom right}}@keyframes fb_bounce_out_from_left{0%{opacity:1;transform:scale(1, 1);transform-origin:bottom left}100%{opacity:0;transform:scale(0, 0);transform-origin:bottom left}}@keyframes slideInFromBottom{0%{opacity:.1;transform:translateY(100%)}100%{opacity:1;transform:translateY(0)}}@keyframes slideInFromBottomDelay{0%{opacity:0;transform:translateY(100%)}97%{opacity:0;transform:translateY(100%)}100%{opacity:1;transform:translateY(0)}}</style></head>
+<body>
+<div id="header"><a href="https://archive.gamedev.net/archive/index.html">GameDev.net</a>Algorithmic Forays Part 4</div>
+<div id="fb-root" class=" fb_reset fb_reset"><script async="" src="./part04_files/all.js(2).download"></script><div style="position: absolute; top: -10000px; width: 0px; height: 0px;"><div></div></div><script async="" src="file://connect.facebook.net/en_US/all.js"></script><div style="position: absolute; top: -10000px; width: 0px; height: 0px;"><div></div></div></div>
+<script>
+    window.fbAsyncInit = function () { FB.init({ appId: '103355463445', status: true, cookie: true, xfbml: true }); };
+    (function () {
+        var e = document.createElement('script'); e.async = true;
+        e.src = document.location.protocol +
+      '//connect.facebook.net/en_US/all.js';
+        document.getElementById('fb-root').appendChild(e);
+    } ());
+</script>
+<center><script type="text/javascript">
+GA_googleFillSlot("Leaderboard_Main");
+</script></center>
+<table cellpadding="5" cellspacing="0" border="0" width="100%"><tbody><tr><td>
+
+    <p align="center"><span class="title">Algorithmic Forays Part 4</span>
+    
+          <br><span class="author">by Eli Bendersky</span>
+        </p>
+    <table align="right" border="0" cellpadding="5" cellspacing="0" width="310">
+    <tbody><tr>
+    <td align="center">
+    <fb:like href="http://www.gamedev.net/reference/articles/article2106.asp" class=" fb_iframe_widget" fb-xfbml-state="rendered" fb-iframe-plugin-query="app_id=103355463445&amp;container_width=0&amp;href=http%3A%2F%2Fwww.gamedev.net%2Freference%2Farticles%2Farticle2106.asp&amp;locale=en_US&amp;sdk=joey"><span style="vertical-align: top; width: 0px; height: 0px; overflow: hidden;"><iframe name="f2a55b89e00504c" width="1000px" height="1000px" data-testid="fb:like Facebook Social Plugin" title="fb:like Facebook Social Plugin" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" src="./part04_files/like.html" style="border: none; visibility: visible; width: 0px; height: 0px;"></iframe></span></fb:like>
+    </td></tr>
+    <tr><td align="center"><br><span class="maintext-2">ADVERTISEMENT</span><script type="text/javascript">
+GA_googleFillSlot("Box_Main");
+</script></td></tr></tbody></table>
+  
+<p>In the last article, I presented the three main techniques in use for generating recognizers from regular expressions. Just to remind you, the techniques are:</p>
+<ul>
+  <li>Build a NFA from the regex. "Simulate" the NFA to recognize input.
+  </li><li>Build a NFA from the regex. Convert the NFA to a DFA. Simulate the DFA to recognize input. 
+  </li><li>Build a DFA directly from the regex. Simulate the DFA to recognize input. 
+</li></ul>
+<p>At first, I was determined to spare you from the whole DFA/NFA discussion and just use the third - direct DFA - technique for recognizer generation. Then, I changed my mind, for two reasons. First, the distinction between NFAs and DFAs in the regex world is important. Different tools use different techniques (for instance, Perl uses NFA while lex and egrep use DFA), and it is valuable to have at least a basic grasp of these topics. Second, and more important, I couldn't help falling to the charms of the NFA-from-regex construction algorithm. It is simple, robust, powerful and complete – in one word, beautiful.</p>
+<p>So, I decided to go for the second technique.</p>
+
+<h1>Construction of a NFA from a regular expression</h1>
+<p>Recall the basic building blocks of regular expressions: <b>eps</b> which represents "nothing" or "no input"; characters from the input alphabet (we used <b>a</b> and <b>b</b> most often in these articles); characters may be concatenated, like this: <b>abb</b>; alternation <b>a|b</b> meaning <b>a</b> or <b>b</b>; the star <b>*</b> meaning "zero or more of the previous"; and grouping <b>()</b>.</p>
+<p>What follows is <i>Thompson's construction</i> - an algorithm that builds a NFA from a regex. The algorithm is syntax directed, in the sense that it uses the syntactic structure of the regex to guide the construction process.</p>
+<p>The beauty and simplicity of this algorithm is in its modularity. First, construction of trivial building blocks is presented.</p>
+
+<ol>
+  <li><p>For <b>eps</b>, construct the NFA:<br><img src="./part04_files/n_eps.jpg" name="Graphic1" align="bottom" width="308" height="113" border="0"><br>Here
+  <i>i</i> is a new start state and <i>f</i> is a new accepting state. It's easy to see that this NFA recognizes the regex <b>eps</b></p>
+  </li><li><p>For some <b>a</b> from the input alphabet, construct the NFA:<br><img src="./part04_files/n_a.jpg" name="Graphic2" align="bottom" width="308" height="113" border="0"><br>Again, it's easy to see that this NFA recognizes the trivial regex <b>a</b>.</p>
+</li></ol>
+
+<p>Now, the interesting part of the algorithm: an inductive construction of complex NFAs from simple NFAs. More specifically, given that <i>N(s)</i> and <i>N(t)</i> are NFA's for regular expressions <i>s</i> and <i>t</i>, we'll see how to combine the NFAs <i>N(s)</i> and <i>N(t)</i> according to the combination of their regexes.</p>
+<ol>
+  <li><p>For the regular expression <b>s|t</b>, construct the following composite NFA <i>N(s|t)</i>:<br><img src="./part04_files/n_or.jpg" name="Graphic3" align="bottom" width="501" height="289" border="0">
+  <br>The <b>eps</b> transitions into and out of the simple NFAs assure that we can be in either of them when the match starts. Any path from the initial to the final state must pass through either <i>N(s)</i> or <i>N(t)</i> exclusively. Thus we see that this composite NFA recognizes <b>s|t</b></p>
+  </li><li><p>For the regular expression <b>st</b> (<b>s</b> and then <b>t</b>), construct the composite NFA <i>NFA(st)</i>:<br><img src="./part04_files/n_concat.jpg" name="Graphic4" align="bottom" width="441" height="141" border="0">
+  <br>The composite NFA will have the start state of <i>N(s)</i> and the end state of <i>N(t)</i>. The accepting (final) state of <i>N(s)</i> is merged with the start state of <i>N(t)</i>. Therefore, all paths going through the composite NFA must go through <i>N(s)</i> and then through <i>N(t)</i>, so it indeed recognizes <i>N(st)</i>.</p>
+  </li><li><p>For the regular expression <b>s*</b>, construct the composite NFA <i>N(s*)</i>:<br><img src="./part04_files/n_star.jpg" name="Graphic5" align="bottom" width="507" height="219" border="0"><br>Note how simply the notion of "zero or more" is represented by this NFA. From the initial state, either "nothing" is accepted with the <b>eps</b> transition to the final state or the "more than" is accepted by going into <i>N(s)</i>. The <b>eps</b> transition inside <i>N(s)</i> denotes that <i>N(s)</i> can appear again and again.</p>
+  </li><li><p>For the sake of completeness: a parenthesized regular expression <b>(s)</b> has the same NFA as <b>s</b>, namely <i>N(s)</i>.</p>
+</li></ol>
+
+<p>As you can see, the algorithm covers all the building blocks of regular expressions, denoting their translations into NFAs.</p>
+
+<h1>An example</h1>
+<p>If you follow the algorithm closely, the following NFA will result for (our old friend,) the regex <b>(a|b)*abb</b>: <br><img src="./part04_files/n_ababb.jpg" name="Graphic6" align="bottom" width="719" height="313" border="0">
+</p><p>Sure, it is much larger than the NFA we saw in the previous article for recognizing the same regex, but this NFA was automatically generated from a regex description using <i>Thompson's construction</i>, rather than crafted by hand.</p>
+<p>Let's see how this NFA was constructed: <br>First, it's easy to note that states 2 and 3 are the basic NFA for the regex <b>a</b>.
+</p><p>Similarly, states 4 and 5 are the NFA for <b>b</b>.
+</p><p>Can you see the <b>a|b</b> ? It's clearly states 1,2,3,4,5,6 (without the <b>eps</b> transition from 6 to 1). <br>Parenthesizing <b>(a|b)</b> doesn't change the NFA <br>The addition of states 0 and 7, plus the <b>eps</b> transition from 6 to 1 is the star on <i>NFA(a|b)</i>, namely states 0 - 7 represent. <br>The rest is easy. States 8 - 10 are simply the concatenation of <b>(a|b)*</b> with <b>abb</b>.</p>
+<p>Try to run a few strings through this NFA until you convince yourself that it indeed recognizes <b>(a|b)*abb</b>. Recall that a NFA recognizes a string when the string's characters can be spelled out on some path from the initial to the final state.</p>
+
+<h1>Implementation of a simple NFA</h1>
+<p>At last, let's get our hands on some code. Now that we know the theory behind NFA-from-regex construction, it's clear that we will be doing some NFA manipulations. But how will we represent NFAs in code?</p>
+<p>NFA is not a trivial concept, and there are full-blown implementations for general NFAs that are far too complex for our needs. My plan is to code as simple an implementation as possible - one that will be enough for our needs and nothing more. After all, the regex recognizing engine is not supposed to expose its NFAs to the outer world - for us a NFA is only an intermediate representation of a regular expression, which we want to simulate in order to "accept" or "reject" input strings.</p>
+<p>My philosophy in such cases is the KISS principle: "Keep It Simple, Stupid". The goal is first to code the simplest implementation that fits my needs. Later, I have no problem refactoring parts of the code and inserting new features, on an as-needed basis.</p>
+<p>A very simple NFA implementation is now presented. We will build upon it in future articles, and for now it is enough just to demonstrate the concept. Here is the interface:</p>
+
+<pre class="code">#ifndef NFA_H
+#define NFA_H
+
+#include &lt;vector&gt;
+
+using namespace std;
+
+
+// Convenience types and constants
+//
+typedef unsigned state;
+typedef char input;
+
+enum {EPS = -1, NONE = 0};
+
+
+class NFA
+{
+public:
+    
+   // Constructed with the NFA size (amount of states), the 
+   // initial state and the final state
+   //
+   NFA(unsigned size_, state initial_, state final_);
+    
+   // Adds a transition between two states
+   //
+   void add_trans(state from, state to, input in);
+    
+   // Prints out the NFA
+   //
+   void show(void);
+
+private:
+   bool is_legal_state(state s);
+    
+   state initial;
+   state final;
+   unsigned size;
+   vector&lt;vector&lt;input&gt; &gt; trans_table;
+};
+
+
+#endif // NFA_H
+</pre>
+
+<p>As promised, the public interface is kept trivial, for now. All we can do is create a NFA object (specifying the amount of states, the start state and the final state), add transitions to it, and print it out. This NFA will then consist of states <tt>0 .. size-1</tt>, with the given transitions (which are single characters). Note that we use only one final state for now, for the sake of symplicity. Should we need more than one, it won't be difficult to add.</p>
+<p>A word about the implementation: I don't want to go deep into graph-theory here (if you're not familiar with the basics, a web search can be very helpful), but basically a NFA is a directed graph. It is most common to implement a graph using either a matrix or an array of linked lists. The first implementation is more speed efficient, the second is better space-wise. For our NFA I picked the matrix (<tt>vector</tt> of <tt>vector</tt>s), mostly because (in my opinion) it is simpler.</p>
+<p>The classic matrix implementation of a graph has 1 in cell <i>(i, j)</i> when there is an edge between vertex <i>i</i> and vertex <i>j</i>, and 0 otherwise.<br>A NFA is a special graph, in the sense that we are interested not only in whether there is an edge, but also in the condition for the edge (the input that leads from one state to another in FSM terminology). Thus, our matrix holds <tt>input</tt>s (a nickname for <tt>char</tt>s, as you can see). So, for instance, <i>'c'</i> in <tt>trans_table[i][j]</tt> means that the input <i>'c'</i> leads from state <i>i</i> to state <i>j</i> in our NFA. <br>Here is the implementation for the NFA class:</p>
+
+<pre class="code">#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;cassert&gt;
+#include &lt;cstdlib&gt;
+#include "nfa.h"
+
+using namespace std;
+
+
+NFA::NFA(unsigned size_, state initial_, state final_)
+{
+   size = size_;
+   initial = initial_;
+   final = final_;
+    
+   assert(is_legal_state(initial));
+   assert(is_legal_state(final));
+    
+   // Initialize trans_table with an "empty graph", no transitions
+   // between its states
+   //
+   for (unsigned i = 0; i &lt; size; ++i)
+   {
+      vector&lt;input&gt; v;
+        
+      for (unsigned j = 0; j &lt; size; ++j)
+      {
+         v.push_back(NONE);
+      }
+        
+      trans_table.push_back(v);
+   }
+}
+
+
+bool NFA::is_legal_state(state s)
+{
+   // We have 'size' states, numbered 0 to size-1
+   // 
+   if (s &lt; 0 || s &gt;= size)
+      return false;
+    
+   return true;
+}
+
+
+void NFA::add_trans(state from, state to, input in)
+{
+   assert(is_legal_state(from));
+   assert(is_legal_state(to));
+    
+   trans_table[from][to] = in;    
+}
+
+
+void NFA::show(void)
+{
+   cout &lt;&lt; "This NFA has " &lt;&lt; size &lt;&lt; " states: 0 - " &lt;&lt; size - 1 &lt;&lt; endl;
+   cout &lt;&lt; "The initial state is " &lt;&lt; initial &lt;&lt; endl;
+   cout &lt;&lt; "The final state is " &lt;&lt; final &lt;&lt; endl &lt;&lt; endl;
+    
+   for (unsigned from = 0; from &lt; size; ++from)
+   {
+      for (unsigned to = 0; to &lt; size; ++to)
+      {
+         input in = trans_table[from][to];
+            
+         if (in != NONE)
+         {
+            cout &lt;&lt; "Transition from " &lt;&lt; from &lt;&lt; " to " &lt;&lt; to &lt;&lt; " on input ";
+                    
+            if (in == EPS)
+            {
+               cout &lt;&lt; "EPS" &lt;&lt; endl;
+            }
+            else
+            {
+               cout &lt;&lt; in &lt;&lt; endl;
+            }
+         }
+      }
+   }
+}
+</pre>
+
+<p>The code is very simple, so you should have no problem understanding what every part of it does. To demonstrate, lets see how we would use this class to create the NFA for <b>(a|b)*abb</b> - the one we built using <i>Thompson's construction</i> earlier in this article (only the driver code is included):</p>
+
+<pre class="code">#include "nfa.h"
+
+int main()
+{
+   NFA n(11, 0, 10);
+    
+   n.add_trans(0, 1, EPS);
+   n.add_trans(0, 7, EPS);
+   n.add_trans(1, 2, EPS);
+   n.add_trans(1, 4, EPS);
+   n.add_trans(2, 3, 'a');
+   n.add_trans(4, 5, 'b');
+   n.add_trans(3, 6, EPS);
+   n.add_trans(5, 6, EPS);
+   n.add_trans(6, 1, EPS);
+   n.add_trans(6, 7, EPS);
+   n.add_trans(7, 8, 'a');
+   n.add_trans(8, 9, 'b');
+   n.add_trans(9, 10, 'b');
+    
+   n.show();
+    
+   return 0;
+}
+</pre>
+
+<p>This would (quite expectedly) result in the following output:</p>
+
+<pre>This NFA has 11 states: 0 - 10
+The initial state is 0
+The final state is 10
+ 
+Transition from 0 to 1 on input EPS
+Transition from 0 to 7 on input EPS
+Transition from 1 to 2 on input EPS
+Transition from 1 to 4 on input EPS
+Transition from 2 to 3 on input a
+Transition from 3 to 6 on input EPS
+Transition from 4 to 5 on input b
+Transition from 5 to 6 on input EPS
+Transition from 6 to 1 on input EPS
+Transition from 6 to 7 on input EPS
+Transition from 7 to 8 on input a
+Transition from 8 to 9 on input b
+Transition from 9 to 10 on input b
+</pre>
+
+<p>As I mentioned earlier: as trivial as this implementation may seem at the moment, it is the basis we will build upon in future articles. Presenting it in small pieces will, hopefully, make the learning curve of this difficult subject less steep for you.</p>
+<hr>
+<p>© Copyright by Eli Bendersky, 2003. All rights reserved. 
+
+</p><p align="center"><b><a href="http://archive.gamedev.net/community/forums/topic.asp?key=featart&amp;uid=2106&amp;forum_id=35&amp;Topic_Title=Algorithmic+Forays+Part+4">Discuss this article in the forums</a></b></p>
+<p>
+<br><span class="maintext-2">Date this article was posted to GameDev.net: <b>6/7/2004</b>
+<br>(Note that this date does not necessarily correspond to the date the article was written)</span>
+</p><p><b>See Also:</b><br>
+
+<a href="https://archive.gamedev.net/archive/reference/listab6b.html?categoryid=78">Featured Articles  </a><br>
+
+<a href="https://archive.gamedev.net/archive/reference/list6397.html?categoryid=126">General  </a><br>
+
+</p><p align="center">© 1999-2011 Gamedev.net. All rights reserved. <a href="https://archive.gamedev.net/archive/info/legal.htm#copyright"><u>Terms of Use</u></a> <a href="https://archive.gamedev.net/archive/info/legal.htm#privacy"><u>Privacy Policy</u></a>
+<br><span class="maintext-1">Comments? Questions? Feedback? <a href="https://archive.gamedev.net/archive/info/faq.html">Click here!</a></span></p>
+
+</td></tr></tbody></table>
+
+
+<!-- start Vibrant Media IntelliTXT Tooltip style sheet -->
+<style type="text/css">
+.iTt{
+    FONT-FAMILY:       Verdana, Arial, Helvetica;
+    FONT-SIZE:         11px;
+    FONT-STYLE:        normal;
+    FONT-WEIGHT:       normal;
+    COLOR:             black;
+    BACKGROUND-COLOR:  lightyellow;
+    BORDER:            black 1px solid;
+    PADDING:           2px;
+}
+.iTt a {
+    COLOR:             0000CC;
+}
+.iTt a:visited {
+    COLOR:             0000CC;
+}
+.iTt a:hover {
+    COLOR:             6666CC;
+}
+.iTt TD {
+   COLOR:              999999;
+}
+</style>
+<!-- end Vibrant Media IntelliTXT style sheet -->
+<!-- start Vibrant Media IntelliTXT script section -->
+<script type="text/javascript" src="http://gamedev.us.intellitxt.com/intellitxt/front.asp?ipid=1966"></script>
+<!-- end Vibrant Media IntelliTXT script section -->
+
+
+
+</body></html>

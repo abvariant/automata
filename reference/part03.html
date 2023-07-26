@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0105)file:///G:/My%20Drive/Programming/automata/webdocs/GameDev.net%20-%20Algorithmic%20Forays%20Part%203.html -->
+<html xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <title>GameDev.net - Algorithmic Forays Part 3</title>
+  <meta property="og:title" content="Algorithmic Forays Part 3">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="http://www.gamedev.net/reference/articles/article2092.asp">
+    <meta property="og:image" content="../../../images.gamedev.net/icons/gamedev_net.png">
+    <meta property="og:site_name" content="GameDev.net">
+    <meta property="fb:app_id" content="103355463445">
+    <meta property="og:description" content="Introduces DFAs and NFAs, and explains the differences between them.">
+  <link rel="stylesheet" href="./part03_files/reference.css" type="text/css">
+  <link rel="icon" href="https://archive.gamedev.net/archive/pics/gdicon.png" type="image/png">
+  <script src="./part03_files/all.js.download" async="" crossorigin="anonymous"></script><script type="text/javascript" async="" src="./part03_files/ga.js.download"></script><script src="./part03_files/all.js(1).download" async="" crossorigin="anonymous"></script><script type="text/javascript" async="" src="./part03_files/ga.js(1).download"></script><script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-279474-1']);
+      _gaq.push(['_trackPageview']);
+      (function () {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+</script>
+<script type="text/javascript" src="./part03_files/google_service.js.download"></script> 
+<script type="text/javascript">
+    GS_googleAddAdSenseService("ca-pub-3167291168602081");
+    GS_googleEnableAllServices();
+</script><script src="./part03_files/f.txt"></script><script src="./part03_files/f(1).txt"></script> 
+<script type="text/javascript">
+GA_googleAddSlot("ca-pub-3167291168602081", "Leaderboard_Main");
+GA_googleAddSlot("ca-pub-3167291168602081", "Box_Main");
+</script>
+
+<script type="text/javascript">
+    GA_googleFetchAds();
+</script> 
+<style type="text/css" data-fbcssmodules="css:fb.css.base css:fb.css.dialog css:fb.css.iframewidget css:fb.css.customer_chat_plugin_iframe">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:'lucida grande', tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:'lucida grande', tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_dialog_advanced{border-radius:8px;padding:10px}.fb_dialog_content{background:#fff;color:#373737}.fb_dialog_close_icon{background:url(https://connect.facebook.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{left:5px;right:auto;top:5px}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://connect.facebook.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent}.fb_dialog_close_icon:active{background:url(https://connect.facebook.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://connect.facebook.net/rsrc.php/v3/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{height:100%;left:0;margin:0;overflow:visible;position:absolute;top:-10000px;transform:none;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://connect.facebook.net/rsrc.php/v3/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{background:none;height:auto;min-height:initial;min-width:initial;width:auto}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{clear:both;color:#fff;display:block;font-size:18px;padding-top:20px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .4);bottom:0;left:0;min-height:100%;position:absolute;right:0;top:0;width:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_mobile .fb_dialog_iframe{position:sticky;top:0}.fb_dialog_content .dialog_header{background:linear-gradient(from(#738aba), to(#2c4987));border-bottom:1px solid;border-color:#043b87;box-shadow:white 0 1px 1px -1px inset;color:#fff;font:bold 14px Helvetica, sans-serif;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:linear-gradient(from(#4267B2), to(#2a4887));background-clip:padding-box;border:1px solid #29487d;border-radius:3px;display:inline-block;line-height:18px;margin-top:3px;max-width:85px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{background:none;border:none;color:#fff;font:bold 12px Helvetica, sans-serif;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://connect.facebook.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #4a4a4a;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f5f6f7;border:1px solid #4a4a4a;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://connect.facebook.net/rsrc.php/v3/yD/r/t-wz8gw1xG1.png);background-position:50% 50%;background-repeat:no-repeat;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}
+.fb_mpn_mobile_landing_page_slide_out{animation-duration:200ms;animation-name:fb_mpn_landing_page_slide_out;transition-timing-function:ease-in}.fb_mpn_mobile_landing_page_slide_out_from_left{animation-duration:200ms;animation-name:fb_mpn_landing_page_slide_out_from_left;transition-timing-function:ease-in}.fb_mpn_mobile_landing_page_slide_up{animation-duration:500ms;animation-name:fb_mpn_landing_page_slide_up;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_in{animation-duration:300ms;animation-name:fb_mpn_bounce_in;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_out{animation-duration:300ms;animation-name:fb_mpn_bounce_out;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_out_v2{animation-duration:300ms;animation-name:fb_mpn_fade_out;transition-timing-function:ease-in}.fb_customer_chat_bounce_in_v2{animation-duration:300ms;animation-name:fb_bounce_in_v2;transition-timing-function:ease-in}.fb_customer_chat_bounce_in_from_left{animation-duration:300ms;animation-name:fb_bounce_in_from_left;transition-timing-function:ease-in}.fb_customer_chat_bounce_out_v2{animation-duration:300ms;animation-name:fb_bounce_out_v2;transition-timing-function:ease-in}.fb_customer_chat_bounce_out_from_left{animation-duration:300ms;animation-name:fb_bounce_out_from_left;transition-timing-function:ease-in}.fb_invisible_flow{display:inherit;height:0;overflow-x:hidden;width:0}@keyframes fb_mpn_landing_page_slide_out{0%{margin:0 12px;width:100% - 24px}60%{border-radius:18px}100%{border-radius:50%;margin:0 24px;width:60px}}@keyframes fb_mpn_landing_page_slide_out_from_left{0%{left:12px;width:100% - 24px}60%{border-radius:18px}100%{border-radius:50%;left:12px;width:60px}}@keyframes fb_mpn_landing_page_slide_up{0%{bottom:0;opacity:0}100%{bottom:24px;opacity:1}}@keyframes fb_mpn_bounce_in{0%{opacity:.5;top:100%}100%{opacity:1;top:0}}@keyframes fb_mpn_fade_out{0%{bottom:30px;opacity:1}100%{bottom:0;opacity:0}}@keyframes fb_mpn_bounce_out{0%{opacity:1;top:0}100%{opacity:.5;top:100%}}@keyframes fb_bounce_in_v2{0%{opacity:0;transform:scale(0, 0);transform-origin:bottom right}50%{transform:scale(1.03, 1.03);transform-origin:bottom right}100%{opacity:1;transform:scale(1, 1);transform-origin:bottom right}}@keyframes fb_bounce_in_from_left{0%{opacity:0;transform:scale(0, 0);transform-origin:bottom left}50%{transform:scale(1.03, 1.03);transform-origin:bottom left}100%{opacity:1;transform:scale(1, 1);transform-origin:bottom left}}@keyframes fb_bounce_out_v2{0%{opacity:1;transform:scale(1, 1);transform-origin:bottom right}100%{opacity:0;transform:scale(0, 0);transform-origin:bottom right}}@keyframes fb_bounce_out_from_left{0%{opacity:1;transform:scale(1, 1);transform-origin:bottom left}100%{opacity:0;transform:scale(0, 0);transform-origin:bottom left}}@keyframes slideInFromBottom{0%{opacity:.1;transform:translateY(100%)}100%{opacity:1;transform:translateY(0)}}@keyframes slideInFromBottomDelay{0%{opacity:0;transform:translateY(100%)}97%{opacity:0;transform:translateY(100%)}100%{opacity:1;transform:translateY(0)}}</style><style type="text/css" data-fbcssmodules="css:fb.css.base css:fb.css.dialog css:fb.css.iframewidget css:fb.css.customer_chat_plugin_iframe">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:'lucida grande', tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:'lucida grande', tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_dialog_advanced{border-radius:8px;padding:10px}.fb_dialog_content{background:#fff;color:#373737}.fb_dialog_close_icon{background:url(https://connect.facebook.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{left:5px;right:auto;top:5px}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://connect.facebook.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent}.fb_dialog_close_icon:active{background:url(https://connect.facebook.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://connect.facebook.net/rsrc.php/v3/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{height:100%;left:0;margin:0;overflow:visible;position:absolute;top:-10000px;transform:none;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://connect.facebook.net/rsrc.php/v3/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{background:none;height:auto;min-height:initial;min-width:initial;width:auto}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{clear:both;color:#fff;display:block;font-size:18px;padding-top:20px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .4);bottom:0;left:0;min-height:100%;position:absolute;right:0;top:0;width:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_mobile .fb_dialog_iframe{position:sticky;top:0}.fb_dialog_content .dialog_header{background:linear-gradient(from(#738aba), to(#2c4987));border-bottom:1px solid;border-color:#043b87;box-shadow:white 0 1px 1px -1px inset;color:#fff;font:bold 14px Helvetica, sans-serif;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:linear-gradient(from(#4267B2), to(#2a4887));background-clip:padding-box;border:1px solid #29487d;border-radius:3px;display:inline-block;line-height:18px;margin-top:3px;max-width:85px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{background:none;border:none;color:#fff;font:bold 12px Helvetica, sans-serif;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://connect.facebook.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #4a4a4a;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f5f6f7;border:1px solid #4a4a4a;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://connect.facebook.net/rsrc.php/v3/yD/r/t-wz8gw1xG1.png);background-position:50% 50%;background-repeat:no-repeat;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}
+.fb_mpn_mobile_landing_page_slide_out{animation-duration:200ms;animation-name:fb_mpn_landing_page_slide_out;transition-timing-function:ease-in}.fb_mpn_mobile_landing_page_slide_out_from_left{animation-duration:200ms;animation-name:fb_mpn_landing_page_slide_out_from_left;transition-timing-function:ease-in}.fb_mpn_mobile_landing_page_slide_up{animation-duration:500ms;animation-name:fb_mpn_landing_page_slide_up;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_in{animation-duration:300ms;animation-name:fb_mpn_bounce_in;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_out{animation-duration:300ms;animation-name:fb_mpn_bounce_out;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_out_v2{animation-duration:300ms;animation-name:fb_mpn_fade_out;transition-timing-function:ease-in}.fb_customer_chat_bounce_in_v2{animation-duration:300ms;animation-name:fb_bounce_in_v2;transition-timing-function:ease-in}.fb_customer_chat_bounce_in_from_left{animation-duration:300ms;animation-name:fb_bounce_in_from_left;transition-timing-function:ease-in}.fb_customer_chat_bounce_out_v2{animation-duration:300ms;animation-name:fb_bounce_out_v2;transition-timing-function:ease-in}.fb_customer_chat_bounce_out_from_left{animation-duration:300ms;animation-name:fb_bounce_out_from_left;transition-timing-function:ease-in}.fb_invisible_flow{display:inherit;height:0;overflow-x:hidden;width:0}@keyframes fb_mpn_landing_page_slide_out{0%{margin:0 12px;width:100% - 24px}60%{border-radius:18px}100%{border-radius:50%;margin:0 24px;width:60px}}@keyframes fb_mpn_landing_page_slide_out_from_left{0%{left:12px;width:100% - 24px}60%{border-radius:18px}100%{border-radius:50%;left:12px;width:60px}}@keyframes fb_mpn_landing_page_slide_up{0%{bottom:0;opacity:0}100%{bottom:24px;opacity:1}}@keyframes fb_mpn_bounce_in{0%{opacity:.5;top:100%}100%{opacity:1;top:0}}@keyframes fb_mpn_fade_out{0%{bottom:30px;opacity:1}100%{bottom:0;opacity:0}}@keyframes fb_mpn_bounce_out{0%{opacity:1;top:0}100%{opacity:.5;top:100%}}@keyframes fb_bounce_in_v2{0%{opacity:0;transform:scale(0, 0);transform-origin:bottom right}50%{transform:scale(1.03, 1.03);transform-origin:bottom right}100%{opacity:1;transform:scale(1, 1);transform-origin:bottom right}}@keyframes fb_bounce_in_from_left{0%{opacity:0;transform:scale(0, 0);transform-origin:bottom left}50%{transform:scale(1.03, 1.03);transform-origin:bottom left}100%{opacity:1;transform:scale(1, 1);transform-origin:bottom left}}@keyframes fb_bounce_out_v2{0%{opacity:1;transform:scale(1, 1);transform-origin:bottom right}100%{opacity:0;transform:scale(0, 0);transform-origin:bottom right}}@keyframes fb_bounce_out_from_left{0%{opacity:1;transform:scale(1, 1);transform-origin:bottom left}100%{opacity:0;transform:scale(0, 0);transform-origin:bottom left}}@keyframes slideInFromBottom{0%{opacity:.1;transform:translateY(100%)}100%{opacity:1;transform:translateY(0)}}@keyframes slideInFromBottomDelay{0%{opacity:0;transform:translateY(100%)}97%{opacity:0;transform:translateY(100%)}100%{opacity:1;transform:translateY(0)}}</style></head>
+<body>
+<div id="header"><a href="https://archive.gamedev.net/archive/index.html">GameDev.net</a>Algorithmic Forays Part 3</div>
+<div id="fb-root" class=" fb_reset fb_reset"><script async="" src="./part03_files/all.js(2).download"></script><div style="position: absolute; top: -10000px; width: 0px; height: 0px;"><div></div></div><script async="" src="file://connect.facebook.net/en_US/all.js"></script><div style="position: absolute; top: -10000px; width: 0px; height: 0px;"><div></div></div></div>
+<script>
+    window.fbAsyncInit = function () { FB.init({ appId: '103355463445', status: true, cookie: true, xfbml: true }); };
+    (function () {
+        var e = document.createElement('script'); e.async = true;
+        e.src = document.location.protocol +
+      '//connect.facebook.net/en_US/all.js';
+        document.getElementById('fb-root').appendChild(e);
+    } ());
+</script>
+<center><script type="text/javascript">
+GA_googleFillSlot("Leaderboard_Main");
+</script></center>
+<table cellpadding="5" cellspacing="0" border="0" width="100%"><tbody><tr><td>
+
+    <p align="center"><span class="title">Algorithmic Forays Part 3</span>
+    
+          <br><span class="author">by Eli Bendersky</span>
+        </p>
+    <table align="right" border="0" cellpadding="5" cellspacing="0" width="310">
+    <tbody><tr>
+    <td align="center">
+    <fb:like href="http://www.gamedev.net/reference/articles/article2092.asp" class=" fb_iframe_widget" fb-xfbml-state="rendered" fb-iframe-plugin-query="app_id=103355463445&amp;container_width=0&amp;href=http%3A%2F%2Fwww.gamedev.net%2Freference%2Farticles%2Farticle2092.asp&amp;locale=en_US&amp;sdk=joey"><span style="vertical-align: top; width: 0px; height: 0px; overflow: hidden;"><iframe name="f10d4f4c694af14" width="1000px" height="1000px" data-testid="fb:like Facebook Social Plugin" title="fb:like Facebook Social Plugin" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" src="./part03_files/like.html" style="border: none; visibility: visible; width: 0px; height: 0px;"></iframe></span></fb:like>
+    </td></tr>
+    <tr><td align="center"><br><span class="maintext-2">ADVERTISEMENT</span><script type="text/javascript">
+GA_googleFillSlot("Box_Main");
+</script></td></tr></tbody></table>
+  
+
+<p>In this article I'm going to introduce DFAs and NFAs, and explain the differences between them. After showing an example, I will also present the various methods for regex recognition employing DFAs and NFAs.</p>
+
+<h1>DFA + NFA = FSM</h1>
+<p>Talking about FSMs in the past two articles, I was hiding the full picture from you, for the sake of simplicity. Now I intend to fix that.</p>
+<p>FSM, as you already know, stands for Finite State Machine. A more scientific name for it is FA - Finite Automaton (plural <i>automata</i>). The theory of Finite Automatons can be classified into several categories, but the one we need for the sake of regex recognition is the notion of <i>determinism</i>. Something is deterministic when it involves no <i>chance</i> - everything is known and can be prescribed and simulated beforehand. On the other hand, nondeterminism is about chance and probabilities. It is commonly defined as "A property of a computation which may have more than one result".
+</p><p>Thus, the world of FSMs can be divided to two: a deterministic FSM is called DFA (Deterministic Finite Automaton) and a nondeterministic FSM is called NFA (Nondeterministic Finite Automaton).</p>
+
+<h1>NFA</h1>
+<p>A <i>nondeterministic finite automaton</i> is a mathematical model that consists of:</p>
+<ol>
+  <li>A set of states S 
+  </li><li>A set of input symbols A (the input symbol alphabet) 
+  </li><li>A transition function <i>move</i> that maps state-symbol pairs to sets of states 
+  </li><li>A state s0 that is the start state
+  </li><li>A set of states F that are the final states 
+</li></ol>
+<p>Most of this should be familiar to you from our FSM discussion in the past articles. I will now elaborate on a few fine points (trying to simplify and avoid mathematical implications).
+</p><p>A NFA <i>accepts</i> an input string <b>X</b> if and only if there is some path in the transition graph from the start state to some accepting (final) state, such that the edge labels along this path spell out <b>X</b>.
+</p><p>The definition of a NFA doesn't pose a restriction on the amount of states resulting in some input in some state. So, given we're in some state <b>N</b> it is completely legal (in a NFA) to transition to several different states given the input <b>a</b>.
+</p><p>Furthermore, epsilon (<b>eps</b>) transitions are allowed in a NFA. That is, there may be a transition from state to state given "no input".
+</p><p>I know this must sound very confusing if it's the first time you learn about NFAs, but an example I'll show a little later should make things more understandable.</p>
+
+<h1>DFA</h1>
+<p>By definition, a <i>deterministic finite automaton</i> is a special case of a NFA, in which 
+</p>
+<ol>
+  <li>No state has an <b>eps</b>-transition
+  </li><li><p>For each state <b>S</b> and input <b>a</b>, there is at most one edge labeled <b>a</b> leaving <b>S</b>.
+</p></li></ol>
+<p>You can immediately see that a DFA is a more "normal" FSM. In fact the FSMs we were discussing in the previous articles are DFAs.</p>
+
+<h1>Recognizing regexes with DFAs and with NFAs</h1>
+<p>To make this more tolerable, consider an example comparing the DFA and the NFA for the regex <b>(a|b)*abb</b> we saw in the previous article. Here is the DFA (exactly the one you saw last time):</p>
+<p><img src="./part03_files/ababb.jpg" alt="Graphic1" align="BOTTOM" border="0">
+</p><p>And this is the NFA:</p>
+<p><img src="./part03_files/4abnfa.jpg" alt="Graphic2" align="BOTTOMBORDER=0">
+</p><p>Can you see a NFA unique feature in this diagram? Look at state 0. When the input is <b>a</b>, where can we move? To state 0 and state 1 - a multiple transition, something that is illegal in a DFA. Take a minute to convince yourself that this NFA indeed accepts <b>(a|b)*abb</b>. For instance, consider the input string <b>abababb</b>. Recall how NFA's <i>acceptance</i> of a string is defined. So, is there a path in the NFA graph above that "spells out" <b>abababb</b>? There indeed is. The path will stay in state 0 for the first 4 characters, and then will move to states 1-&gt;2-&gt;3. Consider the input string <b>baabab</b>. Is there a path that spells out this string? No, there isn't, as in order to reach the final state, we must go through <b>abb</b> in the end, which the input string lacks.</p>
+<p>Both NFAs and DFAs are important in computer science theory and especially in regular expressions. Here are a few points of difference between these constructs:</p>
+<ul>
+  <li>It is simpler to build a NFA directly from a regex than a DFA.
+  </li><li>NFAs are more compact that DFAs. You must agree that the NFA diagram is much simpler for the <b>(a|b)*abb</b> regex. Due to its definition, a NFA doesn't explicitly need many of the transitions a DFA needs. Note how elegantly state 0 in the NFA example above handles the <b>(a|b)*</b> alternation of the regex. In the DFA, the char <b>a</b> can't both keep the automaton in state 0 and move it to state 1, so the many transitions on <b>a</b> to state 1 are required from any other state.
+  </li><li>The compactness also shows in storage requirements. For complex regexes, NFAs are often smaller than DFAs and hence consume less space. There are even cases when a DFA for some regex is exponential in size (while an NFA is always linear) - though this is quite rare.
+  </li><li>NFAs can't be directly simulated in the sense DFA can (recall the simulation algorithm from the previous article). This is due to them being nondeterministic "beings", while our computers are deterministic. They must be simulated using a special technique that generates a DFA from their states "on the fly". More on this later.
+  </li><li>The previous leads to NFAs being less time efficient than DFAs. In fact, when large strings are searched for regex matches, DFAs will almost always be preferable.
+</li></ul>
+<p>There are several techniques involving DFAs and NFAs to build recognizers from regexes: 
+</p>
+<ul>
+  <li>Build a NFA from the regex. "Simulate" the NFA to recognize input.
+  </li><li>Build a NFA from the regex. Convert the NFA to a DFA. Simulate the DFA to recognize input.
+  </li><li>Build a DFA directly from the regex. Simulate the DFA to recognize input.
+  </li><li><p>A few hybrid methods that are too complicated for our discussion.
+</p></li></ul>
+<p>In the next article, I will pick one technique and explain it in depth. After getting to know all the algorithms involved, we will be finally ready for the real implementation of a recognizer.</p>
+<hr><span class="maintext-2">
+© Copyright by Eli Bendersky, 2003. All rights reserved.</span><p></p>
+<p align="center"><b><a href="http://archive.gamedev.net/community/forums/topic.asp?key=featart&amp;uid=2092&amp;forum_id=35&amp;Topic_Title=Algorithmic+Forays+Part+3">Discuss this article in the forums</a></b></p>
+<p>
+<br><span class="maintext-2">Date this article was posted to GameDev.net: <b>4/28/2004</b>
+<br>(Note that this date does not necessarily correspond to the date the article was written)</span>
+</p><p><b>See Also:</b><br>
+
+<a href="https://archive.gamedev.net/archive/reference/listab6b.html?categoryid=78">Featured Articles  </a><br>
+
+<a href="https://archive.gamedev.net/archive/reference/list6397.html?categoryid=126">General  </a><br>
+
+</p><p align="center">© 1999-2011 Gamedev.net. All rights reserved. <a href="https://archive.gamedev.net/archive/info/legal.htm#copyright"><u>Terms of Use</u></a> <a href="https://archive.gamedev.net/archive/info/legal.htm#privacy"><u>Privacy Policy</u></a>
+<br><span class="maintext-1">Comments? Questions? Feedback? <a href="https://archive.gamedev.net/archive/info/faq.html">Click here!</a></span></p>
+
+</td></tr></tbody></table>
+
+
+<!-- start Vibrant Media IntelliTXT Tooltip style sheet -->
+<style type="text/css">
+.iTt{
+    FONT-FAMILY:       Verdana, Arial, Helvetica;
+    FONT-SIZE:         11px;
+    FONT-STYLE:        normal;
+    FONT-WEIGHT:       normal;
+    COLOR:             black;
+    BACKGROUND-COLOR:  lightyellow;
+    BORDER:            black 1px solid;
+    PADDING:           2px;
+}
+.iTt a {
+    COLOR:             0000CC;
+}
+.iTt a:visited {
+    COLOR:             0000CC;
+}
+.iTt a:hover {
+    COLOR:             6666CC;
+}
+.iTt TD {
+   COLOR:              999999;
+}
+</style>
+<!-- end Vibrant Media IntelliTXT style sheet -->
+<!-- start Vibrant Media IntelliTXT script section -->
+<script type="text/javascript" src="http://gamedev.us.intellitxt.com/intellitxt/front.asp?ipid=1966"></script>
+<!-- end Vibrant Media IntelliTXT script section -->
+
+
+
+</body></html>

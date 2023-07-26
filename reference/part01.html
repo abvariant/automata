@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0102)file:///G:/My%20Drive/Programming/automata/temp/GameDev.net%20-%20Algorithmic%20Forays%20Part%201.html -->
+<html xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <title>GameDev.net - Algorithmic Forays Part 1</title>
+  <meta property="og:title" content="Algorithmic Forays Part 1">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="http://www.gamedev.net/reference/articles/article2057.asp">
+    <meta property="og:image" content="../../../images.gamedev.net/icons/gamedev_net.png">
+    <meta property="og:site_name" content="GameDev.net">
+    <meta property="fb:app_id" content="103355463445">
+    <meta property="og:description" content="The first installment in this series takes a look at the Finite State Machine.">
+  <link rel="stylesheet" href="file:///G:/My%20Drive/Programming/automata/temp/GameDev.net%20-%20Algorithmic%20Forays%20Part%201_files/reference.css" type="text/css">
+  <link rel="icon" href="https://archive.gamedev.net/archive/pics/gdicon.png" type="image/png">
+  <script type="text/javascript" async="" src="./part01_files/ga.js.download"></script><script src="file:///G:/My%20Drive/Programming/automata/temp/GameDev.net%20-%20Algorithmic%20Forays%20Part%201_files/all.js.download" async="" crossorigin="anonymous"></script><script type="text/javascript" async="" src="file:///G:/My%20Drive/Programming/automata/temp/GameDev.net%20-%20Algorithmic%20Forays%20Part%201_files/ga.js.download"></script><script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-279474-1']);
+      _gaq.push(['_trackPageview']);
+      (function () {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+</script>
+<script type="text/javascript" src="file:///G:/My%20Drive/Programming/automata/temp/GameDev.net%20-%20Algorithmic%20Forays%20Part%201_files/google_service.js.download"></script> 
+<script type="text/javascript">
+    GS_googleAddAdSenseService("ca-pub-3167291168602081");
+    GS_googleEnableAllServices();
+</script><script src="file:///G:/My%20Drive/Programming/automata/temp/GameDev.net%20-%20Algorithmic%20Forays%20Part%201_files/f.txt"></script> 
+<script type="text/javascript">
+GA_googleAddSlot("ca-pub-3167291168602081", "Leaderboard_Main");
+GA_googleAddSlot("ca-pub-3167291168602081", "Box_Main");
+</script>
+
+<script type="text/javascript">
+    GA_googleFetchAds();
+</script> 
+<style type="text/css" data-fbcssmodules="css:fb.css.base css:fb.css.dialog css:fb.css.iframewidget css:fb.css.customer_chat_plugin_iframe">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:'lucida grande', tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:'lucida grande', tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_dialog_advanced{border-radius:8px;padding:10px}.fb_dialog_content{background:#fff;color:#373737}.fb_dialog_close_icon{background:url(https://connect.facebook.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{left:5px;right:auto;top:5px}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://connect.facebook.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent}.fb_dialog_close_icon:active{background:url(https://connect.facebook.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://connect.facebook.net/rsrc.php/v3/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{height:100%;left:0;margin:0;overflow:visible;position:absolute;top:-10000px;transform:none;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://connect.facebook.net/rsrc.php/v3/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{background:none;height:auto;min-height:initial;min-width:initial;width:auto}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{clear:both;color:#fff;display:block;font-size:18px;padding-top:20px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .4);bottom:0;left:0;min-height:100%;position:absolute;right:0;top:0;width:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_mobile .fb_dialog_iframe{position:sticky;top:0}.fb_dialog_content .dialog_header{background:linear-gradient(from(#738aba), to(#2c4987));border-bottom:1px solid;border-color:#043b87;box-shadow:white 0 1px 1px -1px inset;color:#fff;font:bold 14px Helvetica, sans-serif;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:linear-gradient(from(#4267B2), to(#2a4887));background-clip:padding-box;border:1px solid #29487d;border-radius:3px;display:inline-block;line-height:18px;margin-top:3px;max-width:85px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{background:none;border:none;color:#fff;font:bold 12px Helvetica, sans-serif;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://connect.facebook.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #4a4a4a;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f5f6f7;border:1px solid #4a4a4a;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://connect.facebook.net/rsrc.php/v3/yD/r/t-wz8gw1xG1.png);background-position:50% 50%;background-repeat:no-repeat;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}
+.fb_mpn_mobile_landing_page_slide_out{animation-duration:200ms;animation-name:fb_mpn_landing_page_slide_out;transition-timing-function:ease-in}.fb_mpn_mobile_landing_page_slide_out_from_left{animation-duration:200ms;animation-name:fb_mpn_landing_page_slide_out_from_left;transition-timing-function:ease-in}.fb_mpn_mobile_landing_page_slide_up{animation-duration:500ms;animation-name:fb_mpn_landing_page_slide_up;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_in{animation-duration:300ms;animation-name:fb_mpn_bounce_in;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_out{animation-duration:300ms;animation-name:fb_mpn_bounce_out;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_out_v2{animation-duration:300ms;animation-name:fb_mpn_fade_out;transition-timing-function:ease-in}.fb_customer_chat_bounce_in_v2{animation-duration:300ms;animation-name:fb_bounce_in_v2;transition-timing-function:ease-in}.fb_customer_chat_bounce_in_from_left{animation-duration:300ms;animation-name:fb_bounce_in_from_left;transition-timing-function:ease-in}.fb_customer_chat_bounce_out_v2{animation-duration:300ms;animation-name:fb_bounce_out_v2;transition-timing-function:ease-in}.fb_customer_chat_bounce_out_from_left{animation-duration:300ms;animation-name:fb_bounce_out_from_left;transition-timing-function:ease-in}.fb_invisible_flow{display:inherit;height:0;overflow-x:hidden;width:0}@keyframes fb_mpn_landing_page_slide_out{0%{margin:0 12px;width:100% - 24px}60%{border-radius:18px}100%{border-radius:50%;margin:0 24px;width:60px}}@keyframes fb_mpn_landing_page_slide_out_from_left{0%{left:12px;width:100% - 24px}60%{border-radius:18px}100%{border-radius:50%;left:12px;width:60px}}@keyframes fb_mpn_landing_page_slide_up{0%{bottom:0;opacity:0}100%{bottom:24px;opacity:1}}@keyframes fb_mpn_bounce_in{0%{opacity:.5;top:100%}100%{opacity:1;top:0}}@keyframes fb_mpn_fade_out{0%{bottom:30px;opacity:1}100%{bottom:0;opacity:0}}@keyframes fb_mpn_bounce_out{0%{opacity:1;top:0}100%{opacity:.5;top:100%}}@keyframes fb_bounce_in_v2{0%{opacity:0;transform:scale(0, 0);transform-origin:bottom right}50%{transform:scale(1.03, 1.03);transform-origin:bottom right}100%{opacity:1;transform:scale(1, 1);transform-origin:bottom right}}@keyframes fb_bounce_in_from_left{0%{opacity:0;transform:scale(0, 0);transform-origin:bottom left}50%{transform:scale(1.03, 1.03);transform-origin:bottom left}100%{opacity:1;transform:scale(1, 1);transform-origin:bottom left}}@keyframes fb_bounce_out_v2{0%{opacity:1;transform:scale(1, 1);transform-origin:bottom right}100%{opacity:0;transform:scale(0, 0);transform-origin:bottom right}}@keyframes fb_bounce_out_from_left{0%{opacity:1;transform:scale(1, 1);transform-origin:bottom left}100%{opacity:0;transform:scale(0, 0);transform-origin:bottom left}}@keyframes slideInFromBottom{0%{opacity:.1;transform:translateY(100%)}100%{opacity:1;transform:translateY(0)}}@keyframes slideInFromBottomDelay{0%{opacity:0;transform:translateY(100%)}97%{opacity:0;transform:translateY(100%)}100%{opacity:1;transform:translateY(0)}}</style></head>
+<body>
+<div id="header"><a href="https://archive.gamedev.net/archive/index.html">GameDev.net</a>Algorithmic Forays Part 1</div>
+<div id="fb-root" class=" fb_reset"><script async="" src="file:///G:/My%20Drive/Programming/automata/temp/GameDev.net%20-%20Algorithmic%20Forays%20Part%201_files/all.js(1).download"></script><div style="position: absolute; top: -10000px; width: 0px; height: 0px;"><div></div></div><script async="" src="file://connect.facebook.net/en_US/all.js"></script></div>
+<script>
+    window.fbAsyncInit = function () { FB.init({ appId: '103355463445', status: true, cookie: true, xfbml: true }); };
+    (function () {
+        var e = document.createElement('script'); e.async = true;
+        e.src = document.location.protocol +
+      '//connect.facebook.net/en_US/all.js';
+        document.getElementById('fb-root').appendChild(e);
+    } ());
+</script>
+<center><script type="text/javascript">
+GA_googleFillSlot("Leaderboard_Main");
+</script></center>
+<table cellpadding="5" cellspacing="0" border="0" width="100%"><tbody><tr><td>
+
+    <p align="center"><span class="title">Algorithmic Forays Part 1</span>
+    
+          <br><span class="author">by Eli Bendersky</span>
+        </p>
+    <table align="right" border="0" cellpadding="5" cellspacing="0" width="310">
+    <tbody><tr>
+    <td align="center">
+    <fb:like href="http://www.gamedev.net/reference/articles/article2057.asp" class=" fb_iframe_widget" fb-xfbml-state="rendered" fb-iframe-plugin-query="app_id=103355463445&amp;container_width=0&amp;href=http%3A%2F%2Fwww.gamedev.net%2Freference%2Farticles%2Farticle2057.asp&amp;locale=en_US&amp;sdk=joey"><span style="vertical-align: top; width: 0px; height: 0px; overflow: hidden;"><iframe name="f3b7b12d4aa5a8" width="1000px" height="1000px" data-testid="fb:like Facebook Social Plugin" title="fb:like Facebook Social Plugin" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" src="./part01_files/like.html" style="border: none; visibility: visible; width: 0px; height: 0px;"></iframe></span></fb:like>
+    </td></tr>
+    <tr><td align="center"><br><span class="maintext-2">ADVERTISEMENT</span><script type="text/javascript">
+GA_googleFillSlot("Box_Main");
+</script></td></tr></tbody></table>
+  
+
+<p>I want to present an important and interesting topic in computer science, the <i>Finite State Machine</i> (FSM). In this part we start with the basics, gaining an understanding of what FSMs are and what they can be used for. This part is very elementary, so please be patient. In subsequent parts things will become much more complicated and interesting.</p>
+
+<h1>Finite State Machines - What are they?</h1>
+<p>A finite state machine is a conceptual model that can used to describe how many things work. Think about a light bulb for instance. The circuit consists of a switch, that can be ON or OFF, a few wires and the bulb itself. At any moment in time the bulb is in some state - it is either turned on (emits light) or turned off (no visible effect). For a more focused discussion, let's assume that we have two buttons - one for "turn on" and one for "turn off".</p>
+<p>How would you describe the light bulb circuit? You'd probably put it like this: When it's dark and I press ON, the bulb starts emitting light. Then if I press ON again, nothing changes. If I press OFF the bulb is turned off. Then if I press OFF again, nothing changes.</p>
+<p>This description is very simple and intuitive, but in fact it describes a state machine!</p>
+<p>Think of it the following way: we have a machine (the bulb) with two states, ON and OFF. We have two inputs, an ON switch and an OFF switch. If we are in state ON, pressing ON changes nothing, but pressing OFF moves the machine to state OFF. If we are in state OFF, pressing OFF changes nothing, but pressing ON moves the machine to state ON.</p>
+<p>The above is a rephrasing of the first description, just a little more formal. It is, in fact, a formal description of a state machine. Another customary way to describe state machines is with a diagram (people like diagrams and drawings more than words for some insights):</p>
+<p><img src="./part01_files/bulb.jpg" width="519" height="339" alt="" border="0">
+</p><p>Textual descriptions can become quite wordy, and a simple diagram like this can contain a lot of information. Note how states are represented by circles, and transitions by arrows. This is almost all one needs to know, which makes diagrams very descriptive. This state machine can also be translated to (C++) code:</p>
+
+<pre class="code">...
+...
+typedef enum {ON, OFF} bulb_state;
+typedef enum {TURN_ON, TURN_OFF} switch_command;
+...
+...
+bulb_state state;
+switch_command command;
+
+switch (state)
+{
+    case ON:
+        if (command == TURN_ON)
+        {
+        }
+        else if (command == TURN_OFF)
+        {
+            state = OFF;
+        }
+        break;
+        
+    case OFF:
+        if (command == TURN_ON)
+        {
+            state = ON;
+        }
+        else if (command == TURN_OFF)
+        {
+        }
+        break;
+
+    default:
+        assert(0);
+}
+</pre>
+
+<p>If code such as this looks familiar, it's hardly surprising. Many of us write state machines in our code without even noticing. Most of the state machines we write are "implicit", in the sense that there isn't a single switch statement that handles the whole machine, but rather it's distributed throughout the whole program. If, additionally, the state variables don't have the word "state" in their name, guessing that a certain code is a state machine in disguise is even harder.</p>
+<p>Many programs we write are state machines. Think about a chess game for a moment. If we write a program to play chess against human beings, it's actually a state machine in some sense. It waits for the human to move - an idle state. Once the human moves, it goes into active state of "thinking" about a move to make. A game can have an "end" state such as a victory for one side or a draw. If we think of a GUI for a chess game, the state machine is even more obvious. There is a basic state, when it's a human's move. If a human clicks on some piece, we go into the "clicked" state. In this state, a click on an empty tile may produce a move by the piece. Note that if we click on an empty tile in the "basic" state (no pieces selected), nothing happens. Can you see an obvious state machine here?</p>
+
+<h1>Finite?</h1>
+<p>In the beginning of this part, I said we were going to discuss FSMs. By now I hope you already know what a state machine is, but what has "finite" got to do with it?</p>
+<p>Well, our computers are finite. There's only so much memory (even if it's quite large these days). Therefore, the applications are finite. Finite = Limited. For state machines it means that the amount of states is limited. 1 is limited, 2 is limited, but 10e7 is also limited, though quite large.</p>
+<p>This point may seem banal to some of you, but it is important to emphasize. So now you know what a FSM is: a state machine with a finite number of states. <i>[It can be inferred that all state machines implemented in computer hardware and software must be FSMs. - Ed.]</i></p>
+
+<h1>Employing state machines for our needs</h1>
+<p>State machines can be also used explicitly. We can benefit a lot from knowingly incorporating state machines in our code. First and foremost, it's a great way to reason about difficult problems. If you see that your code or a part of it can actually be in several states, with inputs affecting these states and outputs resulting from them, you can reason about this code using a state machine. Draw a diagram; visualizing always helps. With a diagram errors can be spotted more easily. Think about all the inputs to your code - what should they change in every state? Does your code cover all possibilities (all inputs in all states)? Are some state transitions illegal?</p>
+<p>Another use of state machines is for certain algorithms. In the next part you'll see how essential state machines are for a very common and important application: regular expressions.</p>
+<hr><span class="maintext-2">
+© Copyright by Eli Bendersky, 2003. All rights reserved.</span><p></p>
+
+<p align="center"><b><a href="http://archive.gamedev.net/community/forums/topic.asp?key=featart&amp;uid=2057&amp;forum_id=35&amp;Topic_Title=Algorithmic+Forays+Part+1">Discuss this article in the forums</a></b></p>
+<p>
+<br><span class="maintext-2">Date this article was posted to GameDev.net: <b>3/7/2004</b>
+<br>(Note that this date does not necessarily correspond to the date the article was written)</span>
+</p><p><b>See Also:</b><br>
+
+<a href="https://archive.gamedev.net/archive/reference/listab6b.html?categoryid=78">Featured Articles  </a><br>
+
+<a href="https://archive.gamedev.net/archive/reference/list6397.html?categoryid=126">General  </a><br>
+
+</p><p align="center">© 1999-2011 Gamedev.net. All rights reserved. <a href="https://archive.gamedev.net/archive/info/legal.htm#copyright"><u>Terms of Use</u></a> <a href="https://archive.gamedev.net/archive/info/legal.htm#privacy"><u>Privacy Policy</u></a>
+<br><span class="maintext-1">Comments? Questions? Feedback? <a href="https://archive.gamedev.net/archive/info/faq.html">Click here!</a></span></p>
+
+</td></tr></tbody></table>
+
+
+<!-- start Vibrant Media IntelliTXT Tooltip style sheet -->
+<style type="text/css">
+.iTt{
+    FONT-FAMILY:       Verdana, Arial, Helvetica;
+    FONT-SIZE:         11px;
+    FONT-STYLE:        normal;
+    FONT-WEIGHT:       normal;
+    COLOR:             black;
+    BACKGROUND-COLOR:  lightyellow;
+    BORDER:            black 1px solid;
+    PADDING:           2px;
+}
+.iTt a {
+    COLOR:             0000CC;
+}
+.iTt a:visited {
+    COLOR:             0000CC;
+}
+.iTt a:hover {
+    COLOR:             6666CC;
+}
+.iTt TD {
+   COLOR:              999999;
+}
+</style>
+<!-- end Vibrant Media IntelliTXT style sheet -->
+<!-- start Vibrant Media IntelliTXT script section -->
+<script type="text/javascript" src="http://gamedev.us.intellitxt.com/intellitxt/front.asp?ipid=1966"></script>
+<!-- end Vibrant Media IntelliTXT script section -->
+
+
+
+</body></html>

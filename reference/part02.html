@@ -1,0 +1,325 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0105)file:///G:/My%20Drive/Programming/automata/webdocs/GameDev.net%20-%20Algorithmic%20Forays%20Part%202.html -->
+<html xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <title>GameDev.net - Algorithmic Forays Part 2</title>
+  <meta property="og:title" content="Algorithmic Forays Part 2">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="http://www.gamedev.net/reference/articles/article2076.asp">
+    <meta property="og:image" content="../../../images.gamedev.net/icons/gamedev_net.png">
+    <meta property="og:site_name" content="GameDev.net">
+    <meta property="fb:app_id" content="103355463445">
+    <meta property="og:description" content="This installment looks at regular expressions.">
+  <link rel="stylesheet" href="./part02_files/reference.css" type="text/css">
+  <link rel="icon" href="https://archive.gamedev.net/archive/pics/gdicon.png" type="image/png">
+  <script src="./part02_files/all.js.download" async="" crossorigin="anonymous"></script><script type="text/javascript" async="" src="./part02_files/ga.js.download"></script><script src="./part02_files/all.js(1).download" async="" crossorigin="anonymous"></script><script type="text/javascript" async="" src="./part02_files/ga.js(1).download"></script><script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-279474-1']);
+      _gaq.push(['_trackPageview']);
+      (function () {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+</script>
+<script type="text/javascript" src="./part02_files/google_service.js.download"></script> 
+<script type="text/javascript">
+    GS_googleAddAdSenseService("ca-pub-3167291168602081");
+    GS_googleEnableAllServices();
+</script><script src="./part02_files/f.txt"></script><script src="./part02_files/f(1).txt"></script> 
+<script type="text/javascript">
+GA_googleAddSlot("ca-pub-3167291168602081", "Leaderboard_Main");
+GA_googleAddSlot("ca-pub-3167291168602081", "Box_Main");
+</script>
+
+<script type="text/javascript">
+    GA_googleFetchAds();
+</script> 
+<style type="text/css" data-fbcssmodules="css:fb.css.base css:fb.css.dialog css:fb.css.iframewidget css:fb.css.customer_chat_plugin_iframe">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:'lucida grande', tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:'lucida grande', tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_dialog_advanced{border-radius:8px;padding:10px}.fb_dialog_content{background:#fff;color:#373737}.fb_dialog_close_icon{background:url(https://connect.facebook.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{left:5px;right:auto;top:5px}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://connect.facebook.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent}.fb_dialog_close_icon:active{background:url(https://connect.facebook.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://connect.facebook.net/rsrc.php/v3/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{height:100%;left:0;margin:0;overflow:visible;position:absolute;top:-10000px;transform:none;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://connect.facebook.net/rsrc.php/v3/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{background:none;height:auto;min-height:initial;min-width:initial;width:auto}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{clear:both;color:#fff;display:block;font-size:18px;padding-top:20px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .4);bottom:0;left:0;min-height:100%;position:absolute;right:0;top:0;width:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_mobile .fb_dialog_iframe{position:sticky;top:0}.fb_dialog_content .dialog_header{background:linear-gradient(from(#738aba), to(#2c4987));border-bottom:1px solid;border-color:#043b87;box-shadow:white 0 1px 1px -1px inset;color:#fff;font:bold 14px Helvetica, sans-serif;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:linear-gradient(from(#4267B2), to(#2a4887));background-clip:padding-box;border:1px solid #29487d;border-radius:3px;display:inline-block;line-height:18px;margin-top:3px;max-width:85px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{background:none;border:none;color:#fff;font:bold 12px Helvetica, sans-serif;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://connect.facebook.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #4a4a4a;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f5f6f7;border:1px solid #4a4a4a;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://connect.facebook.net/rsrc.php/v3/yD/r/t-wz8gw1xG1.png);background-position:50% 50%;background-repeat:no-repeat;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}
+.fb_mpn_mobile_landing_page_slide_out{animation-duration:200ms;animation-name:fb_mpn_landing_page_slide_out;transition-timing-function:ease-in}.fb_mpn_mobile_landing_page_slide_out_from_left{animation-duration:200ms;animation-name:fb_mpn_landing_page_slide_out_from_left;transition-timing-function:ease-in}.fb_mpn_mobile_landing_page_slide_up{animation-duration:500ms;animation-name:fb_mpn_landing_page_slide_up;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_in{animation-duration:300ms;animation-name:fb_mpn_bounce_in;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_out{animation-duration:300ms;animation-name:fb_mpn_bounce_out;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_out_v2{animation-duration:300ms;animation-name:fb_mpn_fade_out;transition-timing-function:ease-in}.fb_customer_chat_bounce_in_v2{animation-duration:300ms;animation-name:fb_bounce_in_v2;transition-timing-function:ease-in}.fb_customer_chat_bounce_in_from_left{animation-duration:300ms;animation-name:fb_bounce_in_from_left;transition-timing-function:ease-in}.fb_customer_chat_bounce_out_v2{animation-duration:300ms;animation-name:fb_bounce_out_v2;transition-timing-function:ease-in}.fb_customer_chat_bounce_out_from_left{animation-duration:300ms;animation-name:fb_bounce_out_from_left;transition-timing-function:ease-in}.fb_invisible_flow{display:inherit;height:0;overflow-x:hidden;width:0}@keyframes fb_mpn_landing_page_slide_out{0%{margin:0 12px;width:100% - 24px}60%{border-radius:18px}100%{border-radius:50%;margin:0 24px;width:60px}}@keyframes fb_mpn_landing_page_slide_out_from_left{0%{left:12px;width:100% - 24px}60%{border-radius:18px}100%{border-radius:50%;left:12px;width:60px}}@keyframes fb_mpn_landing_page_slide_up{0%{bottom:0;opacity:0}100%{bottom:24px;opacity:1}}@keyframes fb_mpn_bounce_in{0%{opacity:.5;top:100%}100%{opacity:1;top:0}}@keyframes fb_mpn_fade_out{0%{bottom:30px;opacity:1}100%{bottom:0;opacity:0}}@keyframes fb_mpn_bounce_out{0%{opacity:1;top:0}100%{opacity:.5;top:100%}}@keyframes fb_bounce_in_v2{0%{opacity:0;transform:scale(0, 0);transform-origin:bottom right}50%{transform:scale(1.03, 1.03);transform-origin:bottom right}100%{opacity:1;transform:scale(1, 1);transform-origin:bottom right}}@keyframes fb_bounce_in_from_left{0%{opacity:0;transform:scale(0, 0);transform-origin:bottom left}50%{transform:scale(1.03, 1.03);transform-origin:bottom left}100%{opacity:1;transform:scale(1, 1);transform-origin:bottom left}}@keyframes fb_bounce_out_v2{0%{opacity:1;transform:scale(1, 1);transform-origin:bottom right}100%{opacity:0;transform:scale(0, 0);transform-origin:bottom right}}@keyframes fb_bounce_out_from_left{0%{opacity:1;transform:scale(1, 1);transform-origin:bottom left}100%{opacity:0;transform:scale(0, 0);transform-origin:bottom left}}@keyframes slideInFromBottom{0%{opacity:.1;transform:translateY(100%)}100%{opacity:1;transform:translateY(0)}}@keyframes slideInFromBottomDelay{0%{opacity:0;transform:translateY(100%)}97%{opacity:0;transform:translateY(100%)}100%{opacity:1;transform:translateY(0)}}</style><style type="text/css" data-fbcssmodules="css:fb.css.base css:fb.css.dialog css:fb.css.iframewidget css:fb.css.customer_chat_plugin_iframe">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:'lucida grande', tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:'lucida grande', tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_dialog_advanced{border-radius:8px;padding:10px}.fb_dialog_content{background:#fff;color:#373737}.fb_dialog_close_icon{background:url(https://connect.facebook.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{left:5px;right:auto;top:5px}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://connect.facebook.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent}.fb_dialog_close_icon:active{background:url(https://connect.facebook.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://connect.facebook.net/rsrc.php/v3/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{height:100%;left:0;margin:0;overflow:visible;position:absolute;top:-10000px;transform:none;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://connect.facebook.net/rsrc.php/v3/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{background:none;height:auto;min-height:initial;min-width:initial;width:auto}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{clear:both;color:#fff;display:block;font-size:18px;padding-top:20px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .4);bottom:0;left:0;min-height:100%;position:absolute;right:0;top:0;width:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_mobile .fb_dialog_iframe{position:sticky;top:0}.fb_dialog_content .dialog_header{background:linear-gradient(from(#738aba), to(#2c4987));border-bottom:1px solid;border-color:#043b87;box-shadow:white 0 1px 1px -1px inset;color:#fff;font:bold 14px Helvetica, sans-serif;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:linear-gradient(from(#4267B2), to(#2a4887));background-clip:padding-box;border:1px solid #29487d;border-radius:3px;display:inline-block;line-height:18px;margin-top:3px;max-width:85px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{background:none;border:none;color:#fff;font:bold 12px Helvetica, sans-serif;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://connect.facebook.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #4a4a4a;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f5f6f7;border:1px solid #4a4a4a;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://connect.facebook.net/rsrc.php/v3/yD/r/t-wz8gw1xG1.png);background-position:50% 50%;background-repeat:no-repeat;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}
+.fb_mpn_mobile_landing_page_slide_out{animation-duration:200ms;animation-name:fb_mpn_landing_page_slide_out;transition-timing-function:ease-in}.fb_mpn_mobile_landing_page_slide_out_from_left{animation-duration:200ms;animation-name:fb_mpn_landing_page_slide_out_from_left;transition-timing-function:ease-in}.fb_mpn_mobile_landing_page_slide_up{animation-duration:500ms;animation-name:fb_mpn_landing_page_slide_up;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_in{animation-duration:300ms;animation-name:fb_mpn_bounce_in;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_out{animation-duration:300ms;animation-name:fb_mpn_bounce_out;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_out_v2{animation-duration:300ms;animation-name:fb_mpn_fade_out;transition-timing-function:ease-in}.fb_customer_chat_bounce_in_v2{animation-duration:300ms;animation-name:fb_bounce_in_v2;transition-timing-function:ease-in}.fb_customer_chat_bounce_in_from_left{animation-duration:300ms;animation-name:fb_bounce_in_from_left;transition-timing-function:ease-in}.fb_customer_chat_bounce_out_v2{animation-duration:300ms;animation-name:fb_bounce_out_v2;transition-timing-function:ease-in}.fb_customer_chat_bounce_out_from_left{animation-duration:300ms;animation-name:fb_bounce_out_from_left;transition-timing-function:ease-in}.fb_invisible_flow{display:inherit;height:0;overflow-x:hidden;width:0}@keyframes fb_mpn_landing_page_slide_out{0%{margin:0 12px;width:100% - 24px}60%{border-radius:18px}100%{border-radius:50%;margin:0 24px;width:60px}}@keyframes fb_mpn_landing_page_slide_out_from_left{0%{left:12px;width:100% - 24px}60%{border-radius:18px}100%{border-radius:50%;left:12px;width:60px}}@keyframes fb_mpn_landing_page_slide_up{0%{bottom:0;opacity:0}100%{bottom:24px;opacity:1}}@keyframes fb_mpn_bounce_in{0%{opacity:.5;top:100%}100%{opacity:1;top:0}}@keyframes fb_mpn_fade_out{0%{bottom:30px;opacity:1}100%{bottom:0;opacity:0}}@keyframes fb_mpn_bounce_out{0%{opacity:1;top:0}100%{opacity:.5;top:100%}}@keyframes fb_bounce_in_v2{0%{opacity:0;transform:scale(0, 0);transform-origin:bottom right}50%{transform:scale(1.03, 1.03);transform-origin:bottom right}100%{opacity:1;transform:scale(1, 1);transform-origin:bottom right}}@keyframes fb_bounce_in_from_left{0%{opacity:0;transform:scale(0, 0);transform-origin:bottom left}50%{transform:scale(1.03, 1.03);transform-origin:bottom left}100%{opacity:1;transform:scale(1, 1);transform-origin:bottom left}}@keyframes fb_bounce_out_v2{0%{opacity:1;transform:scale(1, 1);transform-origin:bottom right}100%{opacity:0;transform:scale(0, 0);transform-origin:bottom right}}@keyframes fb_bounce_out_from_left{0%{opacity:1;transform:scale(1, 1);transform-origin:bottom left}100%{opacity:0;transform:scale(0, 0);transform-origin:bottom left}}@keyframes slideInFromBottom{0%{opacity:.1;transform:translateY(100%)}100%{opacity:1;transform:translateY(0)}}@keyframes slideInFromBottomDelay{0%{opacity:0;transform:translateY(100%)}97%{opacity:0;transform:translateY(100%)}100%{opacity:1;transform:translateY(0)}}</style></head>
+<body>
+<div id="header"><a href="https://archive.gamedev.net/archive/index.html">GameDev.net</a>Algorithmic Forays Part 2</div>
+<div id="fb-root" class=" fb_reset fb_reset"><script async="" src="./part02_files/all.js(2).download"></script><div style="position: absolute; top: -10000px; width: 0px; height: 0px;"><div></div></div><script async="" src="file://connect.facebook.net/en_US/all.js"></script><div style="position: absolute; top: -10000px; width: 0px; height: 0px;"><div></div></div></div>
+<script>
+    window.fbAsyncInit = function () { FB.init({ appId: '103355463445', status: true, cookie: true, xfbml: true }); };
+    (function () {
+        var e = document.createElement('script'); e.async = true;
+        e.src = document.location.protocol +
+      '//connect.facebook.net/en_US/all.js';
+        document.getElementById('fb-root').appendChild(e);
+    } ());
+</script>
+<center><script type="text/javascript">
+GA_googleFillSlot("Leaderboard_Main");
+</script></center>
+<table cellpadding="5" cellspacing="0" border="0" width="100%"><tbody><tr><td>
+
+    <p align="center"><span class="title">Algorithmic Forays Part 2</span>
+    
+          <br><span class="author">by Eli Bendersky</span>
+        </p>
+    <table align="right" border="0" cellpadding="5" cellspacing="0" width="310">
+    <tbody><tr>
+    <td align="center">
+    <fb:like href="http://www.gamedev.net/reference/articles/article2076.asp" class=" fb_iframe_widget" fb-xfbml-state="rendered" fb-iframe-plugin-query="app_id=103355463445&amp;container_width=0&amp;href=http%3A%2F%2Fwww.gamedev.net%2Freference%2Farticles%2Farticle2076.asp&amp;locale=en_US&amp;sdk=joey"><span style="vertical-align: top; width: 0px; height: 0px; overflow: hidden;"><iframe name="f1e3392e035e0ac" width="1000px" height="1000px" data-testid="fb:like Facebook Social Plugin" title="fb:like Facebook Social Plugin" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" src="./part02_files/like.html" style="border: none; visibility: visible; width: 0px; height: 0px;"></iframe></span></fb:like>
+    </td></tr>
+    <tr><td align="center"><br><span class="maintext-2">ADVERTISEMENT</span><script type="text/javascript">
+GA_googleFillSlot("Box_Main");
+</script></td></tr></tbody></table>
+  
+<p>In the last article learned the basics of finite state machines and saw a simple application. As promised, we will now explore a much more interesting use for FSMs: regular expressions. If the topic of regular expressions is familiar to you, feel free to skip the first section, since it serves as a basic introduction to the subject.</p>
+
+<h1>Regular expressions (regexes)</h1>
+<p>Think of an identifier in C++ (such as <b>this</b>, <b>temp_var2</b>, <b>assert</b> etc.). How would you describe what qualifies for an identifier? Lets see if we remember... an identifier consists of letters, digits and the underscore character (_), and must start with a letter (it's possible to start with an underscore, but better not to, as these identifiers are reserved by the language).
+</p><p>A regular expression is a notation that allows us to define such things precisely:</p>
+<p>letter (letter | digit | underscore) *</p>
+<p>In regular expressions, the vertical bar | means "or", the parentheses are used to group sub expressions (just like in math) and the asterisk (*) means "zero or more instances of the previous". So the regular expression above defines the set of all C++ identifiers (a letter followed by zero or more letters, digits or underscores). Lets see some more examples:</p>
+<ul>
+  <li><b>abb*a</b> - all words starting with a, ending with a, and having at least one b in-between. For example: "aba", "abba", "abbbba" are 	words that fit, but "aa" or "abab" are not.
+  </li><li><b>0|1|2|3|4|5|6|7|8|9</b> - all digits. For example: "1" is a digit, "fx" is not.
+  </li><li><b>x(y|z)*(a|b|c)</b> - all words starting with x, then zero or more y or z, and end with a, b or c. For example: "xa", "xya", "xzc", "xyzzzyzyyyzb".
+  </li><li><b>xyz</b> - only the word "xyz".
+</li></ul>
+<p>There is another symbol we'll use: <i>eps</i> (usually denoted with the Greek letter Epsilon) <i>eps</i> means "nothing". So, for example the regular expression for "either xy or xyz" is: <b>xy(z|<i>eps</i>)</b>.</p>
+<p>People familiar with regexes know that there are more complicated forms than * and |. However, anything can be built from *, | and <i>eps</i>. For instance, <b>x?</b> (zero or one instance of x) is a shorthand for <b>(x|<i>eps</i>)</b>. <b>x+</b> (one or more instances of x) is a shorthand for <b>xx*</b>. Note also the interesting fact that * can be represented with +, namely: <b>x*</b> is equivalent to <b>(x+)|<i>eps</i></b>.</p>
+<p><i>[Perl programmers and those familiar with Perl syntax (Python programmers, that would include you) will recognize </i><b>eps</b><i> as a more elegant alternative to the numerical notation </i>{m, n} <i>where both </i>m <i>and </i>n <i>are zero. In this notation, </i><b>x*</b> <i>is equivalent to </i><b>x{0,}</b> <i>(unbound upper limit), </i><b>x+</b> <i>is </i><b>x{1,}</b> <i>and all other cases can be built from these two base cases. - Ed.]</i></p>
+
+<h1>Recognizing strings with regexes</h1>
+<p>Usually a regex is implemented to solve some recognition problem. For example, suppose your application asks a question and the user should anwswer Yes or No. The legal input, expressed as a regex is <b>(yes)|(no)</b>. Pretty simple and not too exciting - but things can get much more interesting.</p>
+<p>Suppose we want to recognize the following regex: <b>(a|b)*abb</b>, namely all words consisting of a's and b's and ending with abb. For example: "ababb", "aaabbbaaabbbabb". Say you'd like to write the code that accepts such words an rejects others. The following function does the job:</p>
+
+<pre class="code">bool recognize(string str)
+{
+    string::size_type len = str.length();
+    
+    // can't be shorter than 3 chars
+    if (len &lt; 3)
+        return false;
+    
+    // last 3 chars must be "abb"
+    if (str.substr(len - 3, 3) != "abb")
+        return false;
+    
+    // must contain no chars other than "a" and "b"
+    if (str.find_first_not_of("ab") != string::npos)
+        return false;
+    
+    return true;
+}
+</pre>
+<p>It's pretty clean and robust - it will recognize <b>(a|b)*abb</b> and reject anything else. However, it is clear that the techniques employed in the code are very "personal" to the regex at hand. <br>If we slightly change the regex to <b>(a|b)*abb(a|b)*</b>, for instance (all sequences of a's and b's that have abb somewhere in them), it would change the algorithm completely. (We'd then probably want to go over the string, a char at a time and record the appearance of abb. If the string ends and abb wasn't found, it's a rejection, etc.). It seems that for each regex, we should think of some algorithm to handle it, and this algorithm can be completely different from algorithms for other regexes.</p>
+<p>So what is the solution? Is there any standartized way to handle regexes? Can we even dream of a general algorithm that can produce a recognizer function given a regex? We sure can (otherwise, what would this article be about :-) )! Read on.</p>
+
+<h1>FSMs to the rescue</h1>
+<p>It happens so that Finite State Machines are a very useful tool for regular expressions. More specifically, a regex (any regex!) can be represented as an FSM. To show how, however, we must present two additional definitions (which actually are very logical, assuming we use a FSM for a regex).</p>
+<ul>
+  <li>A start state is the state in which a FSM starts.
+  </li><li>An accepting state is a final state in which the FSM returns with some answer.
+</li></ul>
+<p>It is best presented with an example:</p>
+<p><img src="./part02_files/xyy.jpg" name="Graphic1">
+</p><p>The start state 0 is denoted with a "Start" arrow. 1 is the accepting state (it is denoted with the bold border). Now, try to figure out what regex this FSM represents.</p>
+<p>It actually represents <b>xy*</b> - x and then 0 or more of y. Do you see how? Note that x leads the FSM to state 1, which is the accepting state. Adding y keeps the FSM in the accepting state. If a x appears when in state 1, the FSM moves to state 2, which is non accepting and "stuck", since any input keeps the FSM in state 2 (because <b>xy*</b> rejects strings where a x comes after y-s). But what happens with other letters ? For simplicity we'll now assume that for this FSM our language consists of solely x and y. If our input set would be larger (say the whole lowercase alphabet), we could define that each transition not shown (for instance, on input "z" in state 0) leads us into some "unaccepting" state.</p>
+<p>I will now present the general algorithm for figuring out whether a given FSM recognizes a given word. It's called "FSM Simulation". But first lets define an auxiliary function: <i>move(state, input)</i> returns the state resulting from getting <i>input</i> in state <i>state</i>. For the sample FSM above, move(0, X) is 1, move (0, Y) is 0, etc. <br>So, the algorithm goes as follows:</p>
+
+<pre class="code">state = start_state
+input = get_next_input
+while not end of input do
+    state = move(state, input)
+    input = get_next_input
+end
+
+if state is a final state
+    return "ACCEPT"
+else
+    return "REJECT"
+</pre>
+
+<p>The algorithm is presented in very general terms and should be well understood. Lets "run" it on the simple <b>xy*</b> FSM, with the input "xyy". We start from the start state - 0; Get next input: x, end of input ? not yet; move(0, x) moves us to state 1; input now becomes y; not yet end of input; move(1, y) moves us to state 1; exactly the same with the second y; now it's end of input; state 1 is a final state, so "ACCEPT";</p>
+<p>Piece of cake isn't it ? Well, it really is ! It's a straightforward algorithm and a very easy one for the computer to execute.</p>
+<p>Lets go back to the regex we started with - <b>(a|b)*abb</b>. Here is the FSM that represents (recognizes) it: </p>
+<p><img src="./part02_files/ababb.jpg" name="Graphic2">
+</p><p>Although it is much more complicated than the previous FSM, it is still simple to comprehend. This is the nature of FSMs - looking at them you can easily characterize the states they can be in, what transitions occur, and when. Again, note that for simplicity our alphabet consists of solely "a" and "b".</p>
+<p>Paper and pencil is all you need to "run" the FSM Simulation algorithm on some simple string. I encourage you to do it, to understand better how this FSM relates to the <b>(a|b)*abb</b> regex.</p>
+<p>Just for example take a look at the final state - 3. How can we reach it ? From 2 with the input b. How can we reach 2 ? From 1 with input b. How can we reach 1 ? Actually from any state with input a. So, "abb" leads us to accept a string, and it indeed fits the regex.</p>
+<h1>Coding it the FSM way</h1>
+<p>I want to go back to the promise I gave in the beginning of this article. I said that it's possible to generate code straight from any regex. That is, given a regular expression, a general tool can generate the code that will correctly recognize all strings that fit the regex, and reject the others. Lets see what it takes...</p>
+<p>The task is indeed massive, but consider dividing it to two distinct stages:</p>
+<ol>
+  <li>Convert the regex to a FSM
+  </li><li>Write FSM code to recognize strings
+</li></ol>
+<p>Hey, we already know how to do the second stage! It is actually the FSM Simulation algorithm we saw earlier. Most of the algorithm is the same from FSM to FSM (just dealing with input). The only part that changes is the "move" function, which represents the transition diagram of some FSM, and we learned how to code the transition function in the pvery basic, the technique is the same for any FSM!</p>
+<p>Let's now write down the full code that recognizes <b>(a|b)*abb</b>.</p>
+
+<pre class="code">#include &lt;iostream&gt;
+#include &lt;cassert&gt;
+#include &lt;string&gt;
+
+using namespace std;
+
+typedef int     fsm_state;
+typedef char    fsm_input;
+
+
+bool is_final_state(fsm_state state)
+{
+    return (state == 3) ? true : false;
+}
+
+
+fsm_state get_start_state(void)
+{
+    return 0;
+}
+
+
+fsm_state move(fsm_state state, fsm_input input)
+{
+    // our alphabet includes only 'a' and 'b'
+    if (input != 'a' &amp;&amp; input != 'b')
+        assert(0);
+    
+    switch (state)
+    {
+        case 0:
+            if (input == 'a')
+            {
+                return 1;
+            }
+            else if (input == 'b')
+            {
+                return 0;
+            }
+            break;
+        
+        case 1:
+            if (input == 'a')
+            {
+                return 1;
+            }
+            else if (input == 'b')
+            {
+                return 2;
+            }
+            break;
+        
+        case 2:
+            if (input == 'a')
+            {
+                return 1;
+            }
+            else if (input == 'b')
+            {
+                return 3;
+            }
+            break;
+        
+        case 3:
+            if (input == 'a')
+            {
+                return 1;
+            }
+            else if (input == 'b')
+            {
+                return 0;
+            }
+            break;
+        
+        default:
+            assert(0);
+    }
+}
+
+
+bool recognize(string str)
+{
+    if (str == "")
+        return false;
+    
+    fsm_state state = get_start_state();
+    
+    string::const_iterator i = str.begin();
+    fsm_input input = *i;
+    
+    while (i != str.end())
+    {
+        state = move(state, *i);
+        ++i;
+    }
+    
+    if (is_final_state(state))
+        return true;
+    else
+        return false;
+}
+
+// simple driver for testing
+int main(int argc, char** argv)
+{
+    recognize(argv[1]) ? cout &lt;&lt; 1 : cout &lt;&lt; 0;
+
+    return 0;
+}
+</pre>
+
+<p>Take a good look at the <i>recognize</i> function. You should immediately see how closely it follows the FSM Simulation algorithm. The FSM is initialized to the start state, and the first input is read. Then, in a loop, the machine moves to its next state and fetches the next input, etc. until the input string ends. Eventually, we check whether we reached a final state.</p>
+<p>Note that this <i>recognize</i> function will be the same for <b>any</b> regex. The only functions that change are the trivial <i>is_final_state</i> and <i>get_start_state</i>, and the more complicated transition function <i>move</i>. But <i>move</i> is very structural - it closely follows the graphical description of the FSM. As you'll see in future articles, such transition functions are easily generated from the description.</p>
+<p>So, what have we got so far? We know how to write code that runs a state machine on a string. What don't we know? We still don't know how to generate the FSM from a regex. This is what the following articles are about. See you there!</p>
+<hr><span class="maintext-2">
+© Copyright by Eli Bendersky, 2003. All rights reserved.</span><p></p>
+<p align="center"><b><a href="http://archive.gamedev.net/community/forums/topic.asp?key=featart&amp;uid=2076&amp;forum_id=35&amp;Topic_Title=Algorithmic+Forays+Part+2">Discuss this article in the forums</a></b></p>
+<p>
+<br><span class="maintext-2">Date this article was posted to GameDev.net: <b>3/29/2004</b>
+<br>(Note that this date does not necessarily correspond to the date the article was written)</span>
+</p><p><b>See Also:</b><br>
+
+<a href="https://archive.gamedev.net/archive/reference/listab6b.html?categoryid=78">Featured Articles  </a><br>
+
+<a href="https://archive.gamedev.net/archive/reference/list6397.html?categoryid=126">General  </a><br>
+
+</p><p align="center">© 1999-2011 Gamedev.net. All rights reserved. <a href="https://archive.gamedev.net/archive/info/legal.htm#copyright"><u>Terms of Use</u></a> <a href="https://archive.gamedev.net/archive/info/legal.htm#privacy"><u>Privacy Policy</u></a>
+<br><span class="maintext-1">Comments? Questions? Feedback? <a href="https://archive.gamedev.net/archive/info/faq.html">Click here!</a></span></p>
+
+</td></tr></tbody></table>
+
+
+<!-- start Vibrant Media IntelliTXT Tooltip style sheet -->
+<style type="text/css">
+.iTt{
+    FONT-FAMILY:       Verdana, Arial, Helvetica;
+    FONT-SIZE:         11px;
+    FONT-STYLE:        normal;
+    FONT-WEIGHT:       normal;
+    COLOR:             black;
+    BACKGROUND-COLOR:  lightyellow;
+    BORDER:            black 1px solid;
+    PADDING:           2px;
+}
+.iTt a {
+    COLOR:             0000CC;
+}
+.iTt a:visited {
+    COLOR:             0000CC;
+}
+.iTt a:hover {
+    COLOR:             6666CC;
+}
+.iTt TD {
+   COLOR:              999999;
+}
+</style>
+<!-- end Vibrant Media IntelliTXT style sheet -->
+<!-- start Vibrant Media IntelliTXT script section -->
+<script type="text/javascript" src="http://gamedev.us.intellitxt.com/intellitxt/front.asp?ipid=1966"></script>
+<!-- end Vibrant Media IntelliTXT script section -->
+
+
+
+</body></html>
