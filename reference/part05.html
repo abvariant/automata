@@ -1,0 +1,290 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0105)file:///G:/My%20Drive/Programming/automata/webdocs/GameDev.net%20-%20Algorithmic%20Forays%20Part%205.html -->
+<html xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <title>GameDev.net - Algorithmic Forays Part 5</title>
+  <meta property="og:title" content="Algorithmic Forays Part 5">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="http://www.gamedev.net/reference/articles/article2131.asp">
+    <meta property="og:image" content="../../../images.gamedev.net/icons/gamedev_net.png">
+    <meta property="og:site_name" content="GameDev.net">
+    <meta property="fb:app_id" content="103355463445">
+    <meta property="og:description" content="The article discusses and implements the process of taking an arbitrary regex and automatically converting it into an NFA.">
+  <link rel="stylesheet" href="./part05_files/reference.css" type="text/css">
+  <link rel="icon" href="https://archive.gamedev.net/archive/pics/gdicon.png" type="image/png">
+  <script src="./part05_files/all.js.download" async="" crossorigin="anonymous"></script><script type="text/javascript" async="" src="./part05_files/ga.js.download"></script><script src="./part05_files/all.js(1).download" async="" crossorigin="anonymous"></script><script type="text/javascript" async="" src="./part05_files/ga.js(1).download"></script><script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-279474-1']);
+      _gaq.push(['_trackPageview']);
+      (function () {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+</script>
+<script type="text/javascript" src="./part05_files/google_service.js.download"></script> 
+<script type="text/javascript">
+    GS_googleAddAdSenseService("ca-pub-3167291168602081");
+    GS_googleEnableAllServices();
+</script><script src="./part05_files/f.txt"></script><script src="./part05_files/f(1).txt"></script> 
+<script type="text/javascript">
+GA_googleAddSlot("ca-pub-3167291168602081", "Leaderboard_Main");
+GA_googleAddSlot("ca-pub-3167291168602081", "Box_Main");
+</script>
+
+<script type="text/javascript">
+    GA_googleFetchAds();
+</script> 
+<style type="text/css" data-fbcssmodules="css:fb.css.base css:fb.css.dialog css:fb.css.iframewidget css:fb.css.customer_chat_plugin_iframe">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:'lucida grande', tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:'lucida grande', tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_dialog_advanced{border-radius:8px;padding:10px}.fb_dialog_content{background:#fff;color:#373737}.fb_dialog_close_icon{background:url(https://connect.facebook.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{left:5px;right:auto;top:5px}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://connect.facebook.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent}.fb_dialog_close_icon:active{background:url(https://connect.facebook.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://connect.facebook.net/rsrc.php/v3/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{height:100%;left:0;margin:0;overflow:visible;position:absolute;top:-10000px;transform:none;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://connect.facebook.net/rsrc.php/v3/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{background:none;height:auto;min-height:initial;min-width:initial;width:auto}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{clear:both;color:#fff;display:block;font-size:18px;padding-top:20px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .4);bottom:0;left:0;min-height:100%;position:absolute;right:0;top:0;width:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_mobile .fb_dialog_iframe{position:sticky;top:0}.fb_dialog_content .dialog_header{background:linear-gradient(from(#738aba), to(#2c4987));border-bottom:1px solid;border-color:#043b87;box-shadow:white 0 1px 1px -1px inset;color:#fff;font:bold 14px Helvetica, sans-serif;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:linear-gradient(from(#4267B2), to(#2a4887));background-clip:padding-box;border:1px solid #29487d;border-radius:3px;display:inline-block;line-height:18px;margin-top:3px;max-width:85px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{background:none;border:none;color:#fff;font:bold 12px Helvetica, sans-serif;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://connect.facebook.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #4a4a4a;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f5f6f7;border:1px solid #4a4a4a;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://connect.facebook.net/rsrc.php/v3/yD/r/t-wz8gw1xG1.png);background-position:50% 50%;background-repeat:no-repeat;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}
+.fb_mpn_mobile_landing_page_slide_out{animation-duration:200ms;animation-name:fb_mpn_landing_page_slide_out;transition-timing-function:ease-in}.fb_mpn_mobile_landing_page_slide_out_from_left{animation-duration:200ms;animation-name:fb_mpn_landing_page_slide_out_from_left;transition-timing-function:ease-in}.fb_mpn_mobile_landing_page_slide_up{animation-duration:500ms;animation-name:fb_mpn_landing_page_slide_up;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_in{animation-duration:300ms;animation-name:fb_mpn_bounce_in;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_out{animation-duration:300ms;animation-name:fb_mpn_bounce_out;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_out_v2{animation-duration:300ms;animation-name:fb_mpn_fade_out;transition-timing-function:ease-in}.fb_customer_chat_bounce_in_v2{animation-duration:300ms;animation-name:fb_bounce_in_v2;transition-timing-function:ease-in}.fb_customer_chat_bounce_in_from_left{animation-duration:300ms;animation-name:fb_bounce_in_from_left;transition-timing-function:ease-in}.fb_customer_chat_bounce_out_v2{animation-duration:300ms;animation-name:fb_bounce_out_v2;transition-timing-function:ease-in}.fb_customer_chat_bounce_out_from_left{animation-duration:300ms;animation-name:fb_bounce_out_from_left;transition-timing-function:ease-in}.fb_invisible_flow{display:inherit;height:0;overflow-x:hidden;width:0}@keyframes fb_mpn_landing_page_slide_out{0%{margin:0 12px;width:100% - 24px}60%{border-radius:18px}100%{border-radius:50%;margin:0 24px;width:60px}}@keyframes fb_mpn_landing_page_slide_out_from_left{0%{left:12px;width:100% - 24px}60%{border-radius:18px}100%{border-radius:50%;left:12px;width:60px}}@keyframes fb_mpn_landing_page_slide_up{0%{bottom:0;opacity:0}100%{bottom:24px;opacity:1}}@keyframes fb_mpn_bounce_in{0%{opacity:.5;top:100%}100%{opacity:1;top:0}}@keyframes fb_mpn_fade_out{0%{bottom:30px;opacity:1}100%{bottom:0;opacity:0}}@keyframes fb_mpn_bounce_out{0%{opacity:1;top:0}100%{opacity:.5;top:100%}}@keyframes fb_bounce_in_v2{0%{opacity:0;transform:scale(0, 0);transform-origin:bottom right}50%{transform:scale(1.03, 1.03);transform-origin:bottom right}100%{opacity:1;transform:scale(1, 1);transform-origin:bottom right}}@keyframes fb_bounce_in_from_left{0%{opacity:0;transform:scale(0, 0);transform-origin:bottom left}50%{transform:scale(1.03, 1.03);transform-origin:bottom left}100%{opacity:1;transform:scale(1, 1);transform-origin:bottom left}}@keyframes fb_bounce_out_v2{0%{opacity:1;transform:scale(1, 1);transform-origin:bottom right}100%{opacity:0;transform:scale(0, 0);transform-origin:bottom right}}@keyframes fb_bounce_out_from_left{0%{opacity:1;transform:scale(1, 1);transform-origin:bottom left}100%{opacity:0;transform:scale(0, 0);transform-origin:bottom left}}@keyframes slideInFromBottom{0%{opacity:.1;transform:translateY(100%)}100%{opacity:1;transform:translateY(0)}}@keyframes slideInFromBottomDelay{0%{opacity:0;transform:translateY(100%)}97%{opacity:0;transform:translateY(100%)}100%{opacity:1;transform:translateY(0)}}</style><style type="text/css" data-fbcssmodules="css:fb.css.base css:fb.css.dialog css:fb.css.iframewidget css:fb.css.customer_chat_plugin_iframe">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:'lucida grande', tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:'lucida grande', tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_dialog_advanced{border-radius:8px;padding:10px}.fb_dialog_content{background:#fff;color:#373737}.fb_dialog_close_icon{background:url(https://connect.facebook.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{left:5px;right:auto;top:5px}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://connect.facebook.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent}.fb_dialog_close_icon:active{background:url(https://connect.facebook.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://connect.facebook.net/rsrc.php/v3/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{height:100%;left:0;margin:0;overflow:visible;position:absolute;top:-10000px;transform:none;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://connect.facebook.net/rsrc.php/v3/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{background:none;height:auto;min-height:initial;min-width:initial;width:auto}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{clear:both;color:#fff;display:block;font-size:18px;padding-top:20px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .4);bottom:0;left:0;min-height:100%;position:absolute;right:0;top:0;width:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_mobile .fb_dialog_iframe{position:sticky;top:0}.fb_dialog_content .dialog_header{background:linear-gradient(from(#738aba), to(#2c4987));border-bottom:1px solid;border-color:#043b87;box-shadow:white 0 1px 1px -1px inset;color:#fff;font:bold 14px Helvetica, sans-serif;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:linear-gradient(from(#4267B2), to(#2a4887));background-clip:padding-box;border:1px solid #29487d;border-radius:3px;display:inline-block;line-height:18px;margin-top:3px;max-width:85px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{background:none;border:none;color:#fff;font:bold 12px Helvetica, sans-serif;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://connect.facebook.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #4a4a4a;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f5f6f7;border:1px solid #4a4a4a;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://connect.facebook.net/rsrc.php/v3/yD/r/t-wz8gw1xG1.png);background-position:50% 50%;background-repeat:no-repeat;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}
+.fb_mpn_mobile_landing_page_slide_out{animation-duration:200ms;animation-name:fb_mpn_landing_page_slide_out;transition-timing-function:ease-in}.fb_mpn_mobile_landing_page_slide_out_from_left{animation-duration:200ms;animation-name:fb_mpn_landing_page_slide_out_from_left;transition-timing-function:ease-in}.fb_mpn_mobile_landing_page_slide_up{animation-duration:500ms;animation-name:fb_mpn_landing_page_slide_up;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_in{animation-duration:300ms;animation-name:fb_mpn_bounce_in;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_out{animation-duration:300ms;animation-name:fb_mpn_bounce_out;transition-timing-function:ease-in}.fb_mpn_mobile_bounce_out_v2{animation-duration:300ms;animation-name:fb_mpn_fade_out;transition-timing-function:ease-in}.fb_customer_chat_bounce_in_v2{animation-duration:300ms;animation-name:fb_bounce_in_v2;transition-timing-function:ease-in}.fb_customer_chat_bounce_in_from_left{animation-duration:300ms;animation-name:fb_bounce_in_from_left;transition-timing-function:ease-in}.fb_customer_chat_bounce_out_v2{animation-duration:300ms;animation-name:fb_bounce_out_v2;transition-timing-function:ease-in}.fb_customer_chat_bounce_out_from_left{animation-duration:300ms;animation-name:fb_bounce_out_from_left;transition-timing-function:ease-in}.fb_invisible_flow{display:inherit;height:0;overflow-x:hidden;width:0}@keyframes fb_mpn_landing_page_slide_out{0%{margin:0 12px;width:100% - 24px}60%{border-radius:18px}100%{border-radius:50%;margin:0 24px;width:60px}}@keyframes fb_mpn_landing_page_slide_out_from_left{0%{left:12px;width:100% - 24px}60%{border-radius:18px}100%{border-radius:50%;left:12px;width:60px}}@keyframes fb_mpn_landing_page_slide_up{0%{bottom:0;opacity:0}100%{bottom:24px;opacity:1}}@keyframes fb_mpn_bounce_in{0%{opacity:.5;top:100%}100%{opacity:1;top:0}}@keyframes fb_mpn_fade_out{0%{bottom:30px;opacity:1}100%{bottom:0;opacity:0}}@keyframes fb_mpn_bounce_out{0%{opacity:1;top:0}100%{opacity:.5;top:100%}}@keyframes fb_bounce_in_v2{0%{opacity:0;transform:scale(0, 0);transform-origin:bottom right}50%{transform:scale(1.03, 1.03);transform-origin:bottom right}100%{opacity:1;transform:scale(1, 1);transform-origin:bottom right}}@keyframes fb_bounce_in_from_left{0%{opacity:0;transform:scale(0, 0);transform-origin:bottom left}50%{transform:scale(1.03, 1.03);transform-origin:bottom left}100%{opacity:1;transform:scale(1, 1);transform-origin:bottom left}}@keyframes fb_bounce_out_v2{0%{opacity:1;transform:scale(1, 1);transform-origin:bottom right}100%{opacity:0;transform:scale(0, 0);transform-origin:bottom right}}@keyframes fb_bounce_out_from_left{0%{opacity:1;transform:scale(1, 1);transform-origin:bottom left}100%{opacity:0;transform:scale(0, 0);transform-origin:bottom left}}@keyframes slideInFromBottom{0%{opacity:.1;transform:translateY(100%)}100%{opacity:1;transform:translateY(0)}}@keyframes slideInFromBottomDelay{0%{opacity:0;transform:translateY(100%)}97%{opacity:0;transform:translateY(100%)}100%{opacity:1;transform:translateY(0)}}</style></head>
+<body>
+<div id="header"><a href="https://archive.gamedev.net/archive/index.html">GameDev.net</a>Algorithmic Forays Part 5</div>
+<div id="fb-root" class=" fb_reset fb_reset"><script async="" src="./part05_files/all.js(2).download"></script><div style="position: absolute; top: -10000px; width: 0px; height: 0px;"><div></div></div><script async="" src="file://connect.facebook.net/en_US/all.js"></script><div style="position: absolute; top: -10000px; width: 0px; height: 0px;"><div></div></div></div>
+<script>
+    window.fbAsyncInit = function () { FB.init({ appId: '103355463445', status: true, cookie: true, xfbml: true }); };
+    (function () {
+        var e = document.createElement('script'); e.async = true;
+        e.src = document.location.protocol +
+      '//connect.facebook.net/en_US/all.js';
+        document.getElementById('fb-root').appendChild(e);
+    } ());
+</script>
+<center><script type="text/javascript">
+GA_googleFillSlot("Leaderboard_Main");
+</script></center>
+<table cellpadding="5" cellspacing="0" border="0" width="100%"><tbody><tr><td>
+
+    <p align="center"><span class="title">Algorithmic Forays Part 5</span>
+    
+          <br><span class="author">by Eli Bendersky</span>
+        </p>
+    <table align="right" border="0" cellpadding="5" cellspacing="0" width="310">
+    <tbody><tr>
+    <td align="center">
+    <fb:like href="http://www.gamedev.net/reference/articles/article2131.asp" class=" fb_iframe_widget" fb-xfbml-state="rendered" fb-iframe-plugin-query="app_id=103355463445&amp;container_width=0&amp;href=http%3A%2F%2Fwww.gamedev.net%2Freference%2Farticles%2Farticle2131.asp&amp;locale=en_US&amp;sdk=joey"><span style="vertical-align: top; width: 0px; height: 0px; overflow: hidden;"><iframe name="f2f4237b6e025" width="1000px" height="1000px" data-testid="fb:like Facebook Social Plugin" title="fb:like Facebook Social Plugin" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" src="./part05_files/like.html" style="border: none; visibility: visible; width: 0px; height: 0px;"></iframe></span></fb:like>
+    </td></tr>
+    <tr><td align="center"><br><span class="maintext-2">ADVERTISEMENT</span><script type="text/javascript">
+GA_googleFillSlot("Box_Main");
+</script></td></tr></tbody></table>
+  
+<p>Last time we met, you learned about Thompson's Construction - an algorithm for building NFAs from regular expressions. I also presented a "starter" implementation of a basic NFA class in C++. In this article, you'll see the connection between these two. I will present a complete C++ implementation of Thompson's Construction. Additionally, you will see how to represent regular expressions with parse trees, and get acquainted with the code that builds complete NFAs from these regular expressions.</p>
+
+<h1>Implementing Thompson's Construction</h1>
+<p>Thompson's Construction, as you probably remember (If you don't, it is a good time to skim through the previous article) tells us how to build NFAs from trivial regular expressions and then compose them into more complex NFAs. Let's start with the basics:
+
+</p><h1>The simplest regular expression</h1>
+<p>The most basic regular expression is just some single character, for example <b>a</b>. The NFA for such a regex is:<br>
+<img src="./part05_files/n_a.jpg" border="0" width="308" height="113" alt="">
+</p><p>Here is the implementation:
+
+</p><pre class="code">// Builds a basic, single input NFA
+//
+NFA build_nfa_basic(input in)
+{
+   NFA basic(2, 0, 1);
+   basic.add_trans(0, 1, in);
+   
+   return basic;
+}
+</pre>
+
+<p>Just to remind you about our NFA implementation: The first line of the function creates a new (with no transitions yet) NFA of size 2 (that is: with 2 states), and sets state 0 to be the initial state and state 1 to be the final state. The second line adds a transition to the NFA that says "<b>in</b> moves from state 0 to state 1". That's it - a simple regex, a simple construction procedure.
+</p><p>Note that this procedure is suited for the construction of an <b>eps</b> transition as well (it was presented separately in the last article's discussion of Thompson's Construction).
+
+</p><h1>Some changes to the NFA class</h1>
+<p>Last article's implementation of a simple NFA class was just a starting point and we have quite a few changes to make.
+</p><p>First of all, we need direct access to all of the class's data. Instead of providing get and set accessors (which I personally dislike), all of the class members (<tt>size</tt>, <tt>initial</tt>, <tt>final</tt> and <tt>trans_table</tt>) have been made public.
+</p><p>Recall what I told you about the internal representation inside the NFA class - it's a matrix representing the transition table of a graph. For each <tt>i</tt> and <tt>j</tt>, <tt>trans_table[i][j]</tt> is the input that takes the NFA from state <tt>i</tt> to state <tt>j</tt>. It's <tt>NONE</tt> if there's no such transition (hence a lot of space is wasted - the matrix representation, while fast, is inefficient in memory).
+</p><p>Several new operations were added to the NFA class for our use in the NFA building functions. Their implementation can be found in nfa.cpp (one of the files in the .zip that comes with this article). For now, try to understand how they work (it's really simple stuff), later you'll see why we need them for the implementation of various Thompson Construction stages. It may be useful to have the code of nfa.cpp open in an editor, and to follow the code for the operations while reading these explanations. Here they are:
+</p><ul>
+  <li><b><tt>append_empty_state</tt></b> - I want to append a new, empty state to the NFA. This state will have no transitions to it and no transitions from it. If this is the transition table before the appending (a sample table with size 5 - states 0 to 4):<br>
+    <img src="./part05_files/table0_4.jpg" border="0" width="183" height="195" alt="">
+    <br>Then this is the table after the appending:<br>
+    <img src="./part05_files/table_append.jpg" border="0" width="205" height="189" alt="">
+    <br>The shaded cells are the transitions of the original table (be they empty or not), and the white cells are the new table cells - containing <tt>NONE</tt>.<br><br>
+  </li><li><b><tt>shift_states</tt></b> - I want to rename all NFA's states, shifting them "higher" by some given number. For instance, if I have 5 states numbered 0 - 4, and I want to have the same states, just named 2 - 6, I will call <tt>shift_states(2)</tt>, and will get the following table:<br>
+    <img src="./part05_files/table_shifted.jpg" border="0" width="210" height="197" alt="">
+  </li><li><b><tt>fill_states</tt></b> - I want to copy the states of some other NFA into the first table cells of my NFA. For instance, if I take the shifted table from above, and fill its first two states with a new small NFA, I will get (the new NFA's states are sky blue):<br>
+    <img src="./part05_files/table_filled.jpg" width="215" height="209" border="0" alt="">
+    <br>Note that using <tt>fill_states</tt> after <tt>shift_states</tt> is not incidental. These two operations were created to be used together - to concatenate two NFAs. You'll see how they are employed shortly.</li>
+</ul>
+
+<p>Now I will explain how the more complex operations of Thompson's Construction are implemented. You should understand how the operations demonstrated above work, and also have looked at their source code (a good example of our NFA's internal table manipulation). You may still lack the "feel" of why these operations are needed, but this will soon be covered. Just understand how they work, for now.
+
+</p><h1>Implementing alternation: a|b</h1>
+<p>Here is the diagram of NFA alternation from the previous article:<br>
+<img src="./part05_files/n_or.jpg" border="0" width="501" height="289" alt="">
+<br>Given two NFAs, we must build another one that includes all the states of both NFAs plus additional, unified initial and final states. The function that implements this in nfa.cpp is <tt>build_nfa_alter</tt> . Take a look at its source code now - it is well commented and you should be able to follow through all the steps with little difficulty. Note the usage of the new NFA operations to complete the task. First, the NFAs states are shifted to make room for the full NFA. <tt>fill_states</tt> is used to copy the contents of nfa1 to the unified NFA. Finally, <tt>append_empty_state</tt> is used to add another state at the end - the new final state.
+
+</p><h1>Implementing concatenation: ab</h1>
+<p>Here is the diagram of NFA concatenation from the previous article:<br>
+<img src="./part05_files/n_concat.jpg" border="0" width="441" height="141" alt="">
+<br>Given two NFAs, we must build another one that includes all the states of both NFAs (note that nfa1's final and nfa2's initial states are overlapping). The function that implements this in nfa.cpp is <tt>build_nfa_concat</tt>. Just as in <tt>build_nfa_alter</tt>, the new NFA operations are used to construct, step by step, a bigger NFA that contains all the needed states of the concatenation.
+
+</p><h1>Implementing star: a*</h1>
+<p>Here is the diagram of the NFA for <b>a*</b> from the previous article:<br>
+<img src="./part05_files/n_star.jpg" border="0" width="507" height="219" alt="">
+<br>Although the diagram looks complex, the implementation of this construction is relatively simple, as you'll see in <tt>build_nfa_star</tt>. There's no need to shift states, because no two NFAs are joined together. There's only a creation of new initial and final states, and new <b>eps</b> transitions added to implement the star operation.
+
+</p><h1>Specialty of NFAs constructed by Thompson's Construction</h1>
+<p>You might have observed that all the NFAs constructed by Thompson's Construction have some very specific behavior. For instance, all the basic building blocks for single letters are similar, and the rest of the constructions just create new links between these states to allow for the alternation, concatenation and star operations. These NFAs are also special implementation-wise. For instance, note that in our NFA implementation, the first state is always the initial, and the last state is always final. You may have noted that this is useful in several operations.
+
+</p><h1>A complete NFA construction implementation</h1>
+<p>With these operations implemented, we now have a full NFA construction implementation in nfa.cpp! For instance, the regex <b>(a|b)*abb</b> can be built as follows:
+</p><pre class="code">   NFA a = build_nfa_basic('a');
+   NFA b = build_nfa_basic('b');
+
+   NFA alt = build_nfa_alter(a, b);
+   NFA str = build_nfa_star(alt);
+   NFA sa = build_nfa_concat(str, a);
+   NFA sab = build_nfa_concat(sa, b);
+   NFA sabb = build_nfa_concat(sab, b);
+</pre>
+<p>With these steps completed, <tt>sabb</tt> is the NFA representing <b>(a|b)*abb</b> . Note how simple it's to build NFAs this way! There's no need to specify individual transitions like we did before. In fact, it's not necessary to understand NFAs at all - just build the desired regex from its basic blocks, and that's it.
+
+</p><h1>Even closer to complete automation</h1>
+<p>Though it has now become much simpler to construct NFAs from regular expressions, it's still not as automatic as we'd like it to be. One still has to explicitly specify the regex structure. A useful representation of structure is an expression tree. For example, the construction above closely reflects this tree structure:
+<br><img src="./part05_files/tree.jpg" border="0" width="720" height="540" alt="">
+<br>In this tree: . is concatenation, | is alternation, and * is star. So, the regex <b>(a|b)*abb</b> is represented here in a tree form, just like an arithmetic expression.
+</p><p>Such trees in the world of parsing and compilation are called expression trees, or parse trees. For example, to implement an infix calculator (one that can calculate, for example: 3*4 + 5), the expressions are first turned into parse trees, and then these parse trees are walked to make the calculations.
+</p><p>Note, this is, as always, an issue of representation. We have the regex in a textual representation: <b>(a|b)*abb</b> and we want it in NFA representation. Now we're wondering how to turn it from one representation to the other. My solution is to use an intermediate representation - a parse tree. Going from a regex to a parse tree is similar to parsing arithmetic expressions, and going from a parse tree to a NFA will be now demonstrated, using the Thompson's Construction building blocks described in this chapter.
+
+</p><h1>From a parse tree to a NFA</h1>
+<p>A parse tree in our case is just a binary tree, since no operation has more than two arguments. Concatenation and alternations have two arguments, hence their nodes in the tree have two children. Star has one argument - hence only the left child. Chars are the tree leaves. Take a good look at the tree drawn above, you'll see this very clearly.
+</p><p>Take a look at the file regex_parse.cpp that comes with this article. It has alot in it, but you only need to focus only on some specific things for now. First, let's look at the definition of <tt>parse_node:</tt>
+
+</p><pre class="code">typedef enum {CHR, STAR, ALTER, CONCAT} node_type;
+
+
+// Parse node
+//
+struct parse_node
+{
+   parse_node(node_type type_, char data_, parse_node* left_, parse_node* right_)
+       : type(type_), data(data_), left(left_), right(right_) {}
+
+   node_type type;
+   char data;
+   parse_node* left;
+   parse_node* right;   
+};
+</pre>
+
+<p>This is a completely normal definition of a binary tree node that contains data and some type by which it is identified. Let us ignore, for the moment, the question of how such trees are built from regexes (if you're very curious - it's all in regex_parse.cpp), and instead think about how to build NFAs from such trees. It's very straight forward since the parse tree representation is natural for regexes. Here is the code of the <tt>tree_to_nfa</tt> function from regex_parse.cpp:
+
+</p><pre class="code">NFA tree_to_nfa(parse_node* tree)
+{
+   assert(tree);
+   
+   switch (tree-&gt;type)
+   {
+   case CHR:
+      return build_nfa_basic(tree-&gt;data);
+   case ALTER:
+      return build_nfa_alter(tree_to_nfa(tree-&gt;left), tree_to_nfa(tree-&gt;right));
+   case CONCAT:
+      return build_nfa_concat(tree_to_nfa(tree-&gt;left), tree_to_nfa(tree-&gt;right));
+   case STAR:
+      return build_nfa_star(tree_to_nfa(tree-&gt;left));
+   default:
+      assert(0);
+   }
+}
+</pre>
+
+<p>Not much of a rocket science, is it? The power of recursion and trees allows us to build NFAs from parse trees in just 18 lines of code...
+
+</p><h1>From a regex to a parse tree</h1>
+<p>If you've already looked at regex_parse.cpp, you surely noted that it contains quite a lot of code, much more than I've show so far. This code is the construction of parse trees from actual regexes (strings like <b>(a|b)*abb</b>).
+</p><p>I really hate to do this, but I won't explain how this regex-to-tree code works. This article series is complicated enough without getting into parsing. You'll just have to believe me it works (or study the code - it's there!). As a note, the parsing technique I employ to turn regexes into parse trees is called Recursive Descent parsing. It's an exciting topic and there is plenty of information available on it, if you are interested.
+
+</p><h1>We've come a long way...</h1>
+<p>Let's see what we have accomplished: we have implemented the complete process of taking regular expressions and turning them into NFAs - automatically! Our program turns the regexes into parse trees, walks these parse trees and creates NFAs from them using Thompson's Construction.
+</p><p>To see this in action, compile the files nfa.cpp and regex_parse.cpp together (make sure nfa.h resides in the same directory). This would be the command for those who use GCC:</p><p>
+
+</p><pre>g++ -o regex2nfa regex_parse.cpp nfa.cpp</pre>
+
+<p>regex_parse.cpp contains a small main function that takes the first argument and displays the NFA resulting from it. For instance, running:</p><p>
+</p><pre>regex2nfa "(a|b)*abb"</pre>
+
+<p>Displays:
+
+</p><pre>This NFA has 11 states: 0 - 10
+The initial state is 0
+The final state is 10
+ 
+Transition from 0 to 1 on input EPS
+Transition from 0 to 7 on input EPS
+Transition from 1 to 2 on input EPS
+Transition from 1 to 4 on input EPS
+Transition from 2 to 3 on input a
+Transition from 3 to 6 on input EPS
+Transition from 4 to 5 on input b
+Transition from 5 to 6 on input EPS
+Transition from 6 to 1 on input EPS
+Transition from 6 to 7 on input EPS
+Transition from 7 to 8 on input a
+Transition from 8 to 9 on input b
+Transition from 9 to 10 on input b
+</pre>
+<p>Which is, if you recall, the exact same NFA we dutifully crafted by hand for <b>(a|b)*abb</b> in the previous article. Now, we can generate it automatically!
+
+</p><h1>A note about the source code</h1>
+<p>Along with this article, comes <a href="http://downloads.gamedev.net/features/programming/af5/col5_code.zip">a .zip file</a> containing all the code. It currently consists of 3 files: nfa.h, nfa.cpp and regex_parse.cpp (which contains a main() function). All the code, like all my future code for the series is in the public domain - you may do anything you wish with it. If you have any problem compiling and running it, feel free to contact me, I'll help. I'd also be quite happy to receive feedback and bug reports.
+</p><hr>
+© Copyright by Eli Bendersky, 2003. All rights reserved.
+<p align="center"><b><a href="http://archive.gamedev.net/community/forums/topic.asp?key=featart&amp;uid=2131&amp;forum_id=35&amp;Topic_Title=Algorithmic+Forays+Part+5">Discuss this article in the forums</a></b></p>
+<p>
+<br><span class="maintext-2">Date this article was posted to GameDev.net: <b>8/17/2004</b>
+<br>(Note that this date does not necessarily correspond to the date the article was written)</span>
+</p><p><b>See Also:</b><br>
+
+<a href="https://archive.gamedev.net/archive/reference/listab6b.html?categoryid=78">Featured Articles  </a><br>
+
+<a href="https://archive.gamedev.net/archive/reference/list6397.html?categoryid=126">General  </a><br>
+
+</p><p align="center">© 1999-2011 Gamedev.net. All rights reserved. <a href="https://archive.gamedev.net/archive/info/legal.htm#copyright"><u>Terms of Use</u></a> <a href="https://archive.gamedev.net/archive/info/legal.htm#privacy"><u>Privacy Policy</u></a>
+<br><span class="maintext-1">Comments? Questions? Feedback? <a href="https://archive.gamedev.net/archive/info/faq.html">Click here!</a></span></p>
+
+</td></tr></tbody></table>
+
+
+<!-- start Vibrant Media IntelliTXT Tooltip style sheet -->
+<style type="text/css">
+.iTt{
+    FONT-FAMILY:       Verdana, Arial, Helvetica;
+    FONT-SIZE:         11px;
+    FONT-STYLE:        normal;
+    FONT-WEIGHT:       normal;
+    COLOR:             black;
+    BACKGROUND-COLOR:  lightyellow;
+    BORDER:            black 1px solid;
+    PADDING:           2px;
+}
+.iTt a {
+    COLOR:             0000CC;
+}
+.iTt a:visited {
+    COLOR:             0000CC;
+}
+.iTt a:hover {
+    COLOR:             6666CC;
+}
+.iTt TD {
+   COLOR:              999999;
+}
+</style>
+<!-- end Vibrant Media IntelliTXT style sheet -->
+<!-- start Vibrant Media IntelliTXT script section -->
+<script type="text/javascript" src="http://gamedev.us.intellitxt.com/intellitxt/front.asp?ipid=1966"></script>
+<!-- end Vibrant Media IntelliTXT script section -->
+
+
+
+</body></html>
