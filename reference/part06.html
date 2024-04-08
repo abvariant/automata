@@ -1,0 +1,474 @@
+
+<!-- saved from url=(0081)https://archive.gamedev.net/archive/reference/programming/features/af6/index.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>GameDev.net -- Algorithmic Forays Part 6</title>
+<meta name="Keywords" content="game development, game programming, game jobs, video game jobs, games jobs, graphics programming, OpenGL, DirectX, Direct3D, AI, artificial intelligence, game design, game, gamedev, development, programming, c++, games, program, create, design, gouraud, shading, tutorial, art, gdnet">
+<meta name="Description" content="Gamedev.net is the leading resource for game developers, featuring daily news updates, over 1500 featured articles and tutorials, and the most active game development forums anywhere!"> 
+
+<link rel="stylesheet" type="text/css" href="./part06_files/theme.css">
+<script type="text/javascript" async="" src="./part06_files/ga.js.download"></script><script type="text/javascript" src="./part06_files/google_service.js.download"></script>
+<script type="text/javascript">
+  GS_googleAddAdSenseService("ca-pub-3167291168602081");
+  GS_googleEnableAllServices();
+</script><script src="http://partner.googleadservices.com/gampad/google_ads.js"></script>
+<script type="text/javascript">
+GA_googleAddSlot("ca-pub-3167291168602081", "Box_Main");
+GA_googleAddSlot("ca-pub-3167291168602081", "Banner_Main");
+GA_googleAddSlot("ca-pub-3167291168602081", "Button_FrontPage");
+</script>
+<script type="text/javascript">
+  GA_googleFetchAds();
+</script>
+<!--[if IE]>
+<style>
+.source {background: #ffffff; border: solid 2px; font-family: Courier New; color: black; font-size: 9pt; width: 95%; height: 250px; overflow: auto; padding: 3px;}
+</style>
+<script type="text/javascript" src="/include/menu.js"></script>
+<![endif]-->
+<script type="text/javascript">
+var _gaq = _gaq || []; _gaq.push(['_setAccount', 'UA-279474-1']); _gaq.push(['_trackPageview']);
+(function () {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+</head>
+<body>
+<div id="header">
+<div class="logo"><a href="https://archive.gamedev.net/archive/index.html"></a></div>
+<div class="sponsor"></div>
+<div class="banner">
+<script type="text/javascript">
+GA_googleFillSlot("Banner_Main");
+</script></div>
+<div class="nav"><ul id="lw_menu">
+<li id="l1f">Features
+<ul>
+<li id="l2fa"><a href="https://archive.gamedev.net/archive/gamejobs/index.html">Game Jobs</a></li>
+<li id="l2fb"><a href="https://archive.gamedev.net/archive/features/reviews/index.html">Product Reviews</a></li>
+<li id="l2fc"><a href="https://archive.gamedev.net/archive/community/contest/index.html">Contests</a></li>
+<li id="l2fd"><a href="https://archive.gamedev.net/archive/community/gds/index.html">GD Showcase</a></li>
+<li id="l2fe"><a href="https://archive.gamedev.net/archive/info/newsletter.html">Newsletter</a></li>
+</ul>
+</li>
+<li id="l1r">Resources
+<ul>
+<li id="l2ra"><a href="https://archive.gamedev.net/archive/reference/index.html">Articles &amp; Resources</a></li>
+<li id="l2rb"><a href="https://archive.gamedev.net/archive/columns/index.html">Columns</a></li>
+<li id="l2rc"><a href="https://archive.gamedev.net/archive/columns/books/index.html">Books</a></li>
+<li id="l2rd"><a href="https://archive.gamedev.net/archive/reference/start_here/index.html">For Beginners</a></li>
+<li id="l2re"><a href="https://archive.gamedev.net/archive/dict/index.html">Game Dictionary</a></li>
+<li id="l2rf"><a href="http://wiki.gamedev.net/">Wiki</a></li>
+</ul>
+</li>
+<li id="l1c">Community
+<ul>
+<li id="l2ca"><a href="https://archive.gamedev.net/archive/community/forums/index.html">Forums</a></li>
+<li id="l2cb"><a href="http://archive.gamedev.net/community/gathering/">GD Gathering</a></li>
+<li id="l2cc"><a href="https://archive.gamedev.net/archive/community/chat/index.html">Online Chat</a></li>
+<li id="l2cd"><a href="https://archive.gamedev.net/archive/community/forums/index0433.html?cid=17,11&amp;nofavs=t">Workshops</a></li>
+</ul>
+</li>
+<li id="l1m">Members
+<ul>
+<li id="l2ma"><a href="https://archive.gamedev.net/archive/community/forums/logincheckd41d.html">Control Panel</a></li>
+<li id="l2mb"><a href="https://archive.gamedev.net/archive/subscribe/index.html">GDNet+ Signups</a></li>
+<li id="l2mc"><a href="https://archive.gamedev.net/archive/community/journals/index.html">Developer Journals</a></li>
+<li id="l2md"><a href="http://archive.gamedev.net/profile/">Member Search</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<script language="Javascript">
+	startList();
+</script>
+<div class="leftcolumn">	
+			<div id="CMS_Options">
+				<div id="CMS_Features">
+				  <div class="boxContentHeadr_MM">
+				  	<div class="boxContentHeadr_Title">Features</div>
+				  </div>
+				  <div class="boxContent_MM">
+			          <a href="https://archive.gamedev.net/archive/gamejobs/index.html">Game Jobs</a><br>
+			          <a href="https://archive.gamedev.net/archive/features/reviews/index.html">Product Reviews</a><br>
+			          <a href="https://archive.gamedev.net/archive/community/contest/index.html">Contests</a><br>
+			          <a href="https://archive.gamedev.net/archive/community/gds/index.html">GD Showcase</a><br>
+			          <a href="https://archive.gamedev.net/archive/info/newsletter.html">Newsletter</a><br>
+			          <a href="https://archive.gamedev.net/archive/info/media/index.html">Advertise with Us</a><br>
+			          <a href="https://archive.gamedev.net/archive/info/about/index.html">About Us</a>
+				  </div>
+				</div>	
+				<div id="CMS_Resources">
+				  <div class="boxContentHeadr_MM">
+				  	<div class="boxContentHeadr_Title">Resources</div>
+				  </div>
+				  <div class="boxContent_MM">
+			          <a href="https://archive.gamedev.net/archive/reference/index.html">Articles &amp; Resources</a><br>
+			          <a href="https://archive.gamedev.net/archive/columns/index.html">Columns</a><br>
+			          <a href="https://archive.gamedev.net/archive/columns/books/index.html">Books</a><br>
+			          <a href="https://archive.gamedev.net/archive/reference/start_here/index.html">For Beginners</a><br>
+			          <a href="https://archive.gamedev.net/archive/dict/index.html">Game Dictionary</a><br>
+			          <a href="http://wiki.gamedev.net/">Wiki</a><br>
+			          <a href="https://archive.gamedev.net/archive/info/writers.html">Write For Us</a>
+				  </div>
+				</div>	
+				<div id="CMS_Community">
+				  <div class="boxContentHeadr_MM">
+				  	<div class="boxContentHeadr_Title">Community</div>
+				  </div>
+				  <div class="boxContent_MM">
+			          <a href="https://archive.gamedev.net/archive/community/forums/index.html">Forums</a><br>
+			          <a href="http://archive.gamedev.net/community/gathering/">GD Gathering</a><br>
+			          <a href="https://archive.gamedev.net/archive/community/chat/index.html">Online Chat</a><br>
+			          <a href="https://archive.gamedev.net/archive/community/forums/index0433.html?cid=17,11&amp;nofavs=t">Workshops</a><br>
+				  </div>
+				</div>	
+				<div id="CMS_Members">
+				  <div class="boxContentHeadr_MM">
+				  	<div class="boxContentHeadr_Title">Members</div>
+				  </div>			  
+				  <div class="boxContent_MM">
+			          <a href="https://archive.gamedev.net/archive/community/forums/logincheckd41d.html">Control Panel</a><br>
+			          <a href="https://archive.gamedev.net/archive/subscribe/index.html">GDNet+ Signups!</a><br>
+			          <a href="https://archive.gamedev.net/archive/community/journals/index.html">Developer Journals</a><br>
+			          <a href="http://archive.gamedev.net/profile/">Member Search</a><br>
+				  </div>
+				</div>	
+			</div>
+			
+			<div id="FP_Events" class="roundedBox" style="width: 98%;">
+					<div class="boxCorners"><img src="./part06_files/int_rtcr.gif" class="boxLeft" height="8" width="7"><img src="./part06_files/int_ltcr.gif" height="8" width="7"></div>
+						<div class="boxContentHeadr">Upcoming Events</div>
+						<div class="boxContent">
+<img src="./part06_files/dotsm-blue.gif" width="7" height="6"><a href="https://archive.gamedev.net/archive/directory/events/index0bcc.html?method=se&amp;eid=567">Unite 2010</a><br><span class="events_date">11/10 - 11/12 @ Montréal, Canada</span><br><br><img src="./part06_files/dotsm-blue.gif" width="7" height="6"><a href="https://archive.gamedev.net/archive/directory/events/index65f0.html?method=se&amp;eid=563">GDC China</a><br><span class="events_date">12/5 - 12/7 @ Shanghai, China</span><br><br><img src="./part06_files/dotsm-blue.gif" width="7" height="6"><a href="https://archive.gamedev.net/archive/directory/events/indexf471.html?method=se&amp;eid=557">Asia Game Show 2010</a><br><span class="events_date">12/24 - 12/27&nbsp;&nbsp;</span><br><br><img src="./part06_files/dotsm-blue.gif" width="7" height="6"><a href="https://archive.gamedev.net/archive/directory/events/indexf7c7.html?method=se&amp;eid=562">GDC 2011</a><br><span class="events_date">2/28 - 3/4 @ San Francisco, CA</span><br><br><a href="https://archive.gamedev.net/archive/directory/events/index.html">More events...</a>
+						</div>
+			</div>		
+	
+			<div id="FP_Stats" class="roundedBox" style="width: 98%;">
+					<div class="boxCorners"><img src="./part06_files/int_rtcr.gif" class="boxLeft" height="8" width="7"><img src="./part06_files/int_ltcr.gif" height="8" width="7"></div>
+						<div class="boxContentHeadr">Quick Stats</div>
+						<div class="boxContent">
+
+						<span class="stats_bold">114</span> people currently visiting GDNet.<br>
+						<span class="stats_bold">2406</span> articles in the reference section.<br>
+						<br>
+						<a href="http://www.grid.org/services/teams/team.htm?id=FD181524-CCD8-4DAA-A4EC-499F0DB09AD2">Help us fight cancer!</a><br>
+						<a href="http://setiathome.berkeley.edu/team_display.php?teamid=31384">Join SETI Team GDNet!</a>
+						</div>
+
+			</div>			
+
+			<!-- MICROBUTTON ADVERT FOR PARTNER SITES -->		
+			<div id="FP_PartnerButton" align="center">
+<a href="https://archive.gamedev.net/archive/index.html"><img src="./part06_files/gdnet-88x31.gif" width="88" height="31" alt="Link to us" border="0"></a>
+<a href="http://eventsforgamers.com/"><img src="./part06_files/eventsforgamers.gif" width="88" height="31" alt="Events 4 Gamers" border="0"></a>
+<script type="text/javascript">
+GA_googleFillSlot("Button_FrontPage");
+</script>
+			</div>
+			
+</div>
+
+<div id="centercolumn_2col">
+<div class="centerpadding">
+
+
+<div class="contextNav">
+<div class="hdrbreadcrumbs"></div>
+    <div class="hdrSearchBox"><form action="http://archive.gamedev.net/community/forums/search.asp">
+        <img src="./part06_files/search_sponsor.png" alt="Intel"> sponsors gamedev.net search:
+        <input type="text" size="20" name="terms" class="searchinput">
+        <input type="image" src="./part06_files/hdr3srchbtn.gif" class="searchbutton">
+        <input type="hidden" name="area" value="site">
+    </form></div>
+</div>
+
+
+<script language="JavaScript">
+function popupsource(file) {
+  var helpWin = window.open(file,"Code","status=no,scrollbars=no,width=600,height=460");
+}
+</script>
+
+
+<p align="center"><a href="https://archive.gamedev.net/archive/reference/programming/features/af6/index.html"><img src="./part06_files/af.png" border="0" alt=""></a>
+
+
+<table width="100%" cellspacing="0" border="0" cellpaddign="0"><tbody><tr><td>
+
+
+
+<h1>A small debt</h1>
+<p>Before we move to our next major topic in Regex recognition, there's a little something I owe you from the last column. The regex parsing implementation in regex_parse.cpp lacks something: since it recognizes simple characters "as is", it's not possible to feed <b>eps</b> to it (it takes it for "e" followed by "p" followed by "s"). So, to rectify this problem, I added an implementation for the traditional regex symbol <b>?</b> (zero or one). Take a look at <a href="http://downloads.gamedev.net/features/programming/af6/col6_code.zip">regex_parse</a>.cpp to see how it's done - keep in mind that <b>x?</b> is equivalent to <b>(x|eps)</b>.
+
+</p><h1>Converting NFAs to DFAs</h1>
+<p>The N in NFA stands for non-deterministic. Our computers, however, are utterly deterministic beasts, which makes "true" simulation of an NFA impossible. But we do know how to simulate DFAs (in fact, I showed it in the second part of this series). So, what's left is to see how NFAs can be converted to DFAs. This is the topic of this chapter.
+
+</p><h2>Introduction</h2>
+<p>The algorithm for constructing from an NFA a DFA that recognizes the the same language is called "Subset Construction". The main idea of this algorithm is in the following observations:
+</p><ul>
+  <li>In the transition table of an NFA, given a state and an input there's a set of states we can move to. In a DFA, however, there's only one state we can move to.
+  </li><li>Because of <b>eps</b> transitions, even without an input there's a set of states an NFA can be in at any given moment. Not so with the DFA, for which we always know exactly in what state it is.
+  </li><li>Although we can't know in which state from the sets described above the NFA is, the set <i>is</i> known. Therefore, we will represent each set of NFA states by a DFA state. The DFA uses its state to keep track of all possible states the NFA can be in after reading each input symbol.
+</li></ul>
+<p>Take, for example, the familiar NFA of the <b>(a|b)*abb</b> regex (generated automatically by Thompson's Construction, with the code from the last column):
+</p><p><img src="./part06_files/n_ababb.jpg" border="0" width="719" height="313" alt="">
+</p><p>The initial state of this NFA is 0... or is it ? Take a look at the diagram, and count in how many states this NFA can be <i>before</i> any input is read. If you remember the previous columns where I explained how <b>eps</b> transitions work, you should have no trouble noticing that initially, the NFA can be in any of the states {0, 1, 2, 4, 7}, because these are the states reachable by <b>eps</b> transitions from the initial state.
+</p><p>Note: the set T is reachable by <b>eps</b> from itself <i>by definition</i> (the NFA doesn't have to take an <b>eps</b> transition, it can also stay in its current state).
+</p><p>Now imagine we received the input <b>a</b>. What happens next ? In which states can the NFA be now ? This should be easy to answer. Just go over all the states the NFA can be in <i>before</i> the input, and see where the input <b>a</b> leads from them. This way, a new set emerges: {1, 2, 3, 4, 6, 7, 8}. I hope you understand why: initially, the NFA can be in states {0, 1, 2, 4, 7}. But from states 0, 1 and 4 there are no transitions on <b>a</b>. The only transitions on <b>a</b> from that set are from state 2 (to state 3) and from state 7 (to state 8). However, the states {3, 8} is an incomplete answer. There are <b>eps</b> transitions from these states - to states {1, 2, 4, 6, 7}, so the NFA can actually be in any of the states {1, 2, 3, 4, 6, 7, 8}.
+</p><p>If you understand this, you understand mostly how the Subset Construction algorithm works. All that's left is the implementation details. But before we get to the implementation of the conversion algorithm itself, there are a couple of prerequisites.
+
+</p><h2>eps-closure</h2>
+<p>Given N - an NFA and T - a set of NFA states, we would like to know which states in N are reachable from states T by <b>eps</b> transitions. <b>eps-closure</b> is the procedure that answers this question. Here is the algorithm:
+</p><p>
+</p><pre class="code">algorithm <b>eps-closure</b>
+inputs: N - NFA, T - set of NFA states
+output: eps-closure(T) - states reachable from T by <b>eps</b> transitions
+
+  eps-closure(T) = T
+  foreach state t in T
+    push(t, stack)
+  
+  while stack is not empty do
+    t = pop(stack)
+    foreach state u with an <b>eps</b> edge from t to u
+      if u is not in eps-closure(T)
+        add u to eps-closure(T)
+        push(u, stack)
+  end
+  
+  return eps-closure(T)
+</pre>
+<p>This algorithm iteratively finds all the states reachable by <b>eps</b> transitions from the states T. First, the states T themselves are added to the output. Then, one by one the states are checked for <b>eps</b> transitions, and the states these transitions lead to are also added to the output, and are pushed onto the stack (in order to be checked for <b>eps</b> transitions). The process proceeds iteratively, until no more states can be reached with <b>eps</b> transitions only.
+</p><p>For instance, for the <b>(a|b)*abb</b> NFA above, eps-closure({0}) = {0, 1, 2, 4, 7}, eps-closure({8, 9}) = {8, 9}, etc.
+</p><p>In the attached source code, the implementation of eps-closure is in the file subset_construct.cpp, function <span class="code">build_eps_closure</span>. It follows the algorithm outlined above very closely, so you should have no trouble understanding it.
+
+</p><h2>move - a new NFA member function</h2>
+<p>Given T - a set of NFA states, and A - an input, we would like to know which states in the NFA are reachable from T with the input A. This operation was implemented in the function <span class="code">move</span>, in nfa.cpp (member of the NFA class). The function is very simple. It traverses the set T, and looks for transitions on the given input, returning the states that can be reached. It doesn't take into account the <b>eps</b> transitions from those states - there's eps-closure for that.
+
+</p><h2>Keeping track of the input language of an NFA</h2>
+<p>For reasons that will soon become obvious, we must keep track of the input language  used in the NFA. For example, for the regex <b>(a|b)*abb</b> the language is {a, b}. A new member was added to the NFA class for this purpose - <span class="code">inputs</span>. Take a look at the implementation in nfa.cpp to see how it's managed.
+
+</p><h2>DFA implementation</h2>
+<p>Since we intend to build DFAs in this column, we need a DFA implementation. A very basic implementation was coded in dfa.h - take a look at it now. The DFA's transition table is implemented with a <span class="code">map</span>, that maps (state, input) pairs to states. For example, (t1, i) will be mapped to t2 if input i in state t1 leads to state t2. Note that it's not the same representation as the one I used for the NFA. There are two reasons for this difference:
+</p><ul>
+  <li>I want you to see two different implementations of a graph (which is what a transition table is, as I told you before). Both are legitimate for certain purposes.
+  </li><li>A little bit of cheating... I know which operations I'll need from the DFA, so I'm tailoring the representation to these operations. This is a very common programming trick - one should always think about the ways a data structure will be used before he designs its exact implementation.
+</li></ul>
+<p>So take a look at dfa.h - the DFA implementation is very simple - only a transition table, a start state and a set of final states. There are also methods for showing the DFA and for simulating it... 
+</p><p>To remind you, this is the algorithm for DFA simulation (from Algorithmic Forays 2):
+
+</p><pre class="code">algorithm <b>dfa-simulate</b>
+inputs: D - DFA, I - Input
+output: ACCEPT or REJECT
+
+  s = start state of D
+  i = get next input character from I
+  
+  while not end of I do
+    s = state reached with input i from state s
+    i = get next input character from I
+  end
+
+  if s is a final state
+    return ACCEPT
+  else
+    return REJECT
+</pre>
+
+<p>Let's now finally learn how the DFA is built.
+
+</p><h2>Subset Construction</h2>
+<p>In the Introduction, I provided some observations about following NFA states, and gave an example. You saw that while it's impossible to  know in what state an NFA is at any given moment, it's possible to know the set of states it can be in. Then, we can say with certainty that the NFA is in one of the states in this set, and not in any state that's not in the set.
+</p><p>So, the idea of Subset Construction is to build a DFA that keeps track where the NFA can be. Each state in this DFA stands for a set of states the NFA can be in after some transition. "How is this going to help us ?", you may ask yourself. Good question. 
+</p><p>Recall how we simulate a DFA (if you don't feel confident with this material, read the 2nd part of Algorithmic Forays again). When can we say that a DFA recognizes an input string? When the input string ends, we look at the state we're left in. If this is a final state - ACCEPT, if it's not a final state - REJECT.
+</p><p>So, say that we have a DFA, each state of which represents a set of NFA states. Since a NFA will always "pick the correct path", we can assume that if the set contains a final state, the NFA will be in it, and the string is accepted. More formally: A DFA state D represents S - a set of NFA states. If (and only if) one or more of the states in S is a final state, then D is a final state. Therefore, if a simulation ends in D, the input string is accepted.
+</p><p>So, you see, it's useful to keep track of sets of NFA states. This will allow us to correctly "simulate" an NFA by simulating a DFA that represents it. 
+</p><p>Here's the Subset Construction algorithm:
+
+</p><pre class="code">algorithm <b>subset-construction</b>
+inputs: N - NFA
+output: D - DFA
+
+  add eps-closure(N.start) to dfa_states, unmarked
+  D.start = eps-closure(N.start)
+  
+  while there is an unmarked state T in dfa_states do
+    mark(T)
+	
+    if T contains a final state of N
+      add T to D.final
+	
+    foreach input symbol i in N.inputs
+      U = eps-closure(N.move(T, i))
+      if U is not in dfa_states
+        add U to dfa_states, unmarked
+		
+      D.trans_table(T, i) = U
+  end
+</pre>
+<p>The result of this procedure is D - a DFA with a transition table, a start state and a set of final states (not incidentally just what we need for our DFA class...).
+</p><p>Here are some points to help you understand how <b>subset-construction</b> works:
+
+</p><ul>
+  <li>It starts by creating the initial state for the DFA. Since, as we saw in the Introduction, an initial state is really the NFA's initial state plus all the states reachable by <b>eps</b> transitions from it, the DFA initial state is the <b>eps-closure</b> of the NFA's initial state. 
+  </li><li>A state is "marked" if all the transitions from it were explored. 
+  </li><li>A state is added to the final states of the DFA if the set it represents contains the NFA's final state
+  </li><li>The rest of the algorithm is a simple iterative graph search. Transitions are added to the DFA transition table for each symbol in the alphabet of the regex. So the DFA transition actually represents a transition to the <b>eps-closure</b> in each case. Recall once again: a DFA state represents a set of states the NFA can be in after a transition.
+</li></ul>
+<p>This algorithm is implemented in the function <span class="code">subset_construct</span> in subset_construct.cpp, take a look at it now. Here are some points about the implementation:
+
+</p><ul>
+  <li>dfa_states from the algorithm is represented by two sets: <span class="code">marked_states</span> and <span class="code">unmarked_states</span>, with the obvious meanings.
+  </li><li>Since DFA states are really sets of NFA states (see the <span class="code">state_rep</span> typedef), something must be done about numbering them properly (we want a state to be represented by a simple number in the DFA). So, the <span class="code">dfa_state_num</span> map takes care of it, with the numbers generated on-demand by <span class="code">gen_new_state</span>.
+  </li><li>The loop runs while the <span class="code">unmarked_states</span> set is not empty. Then, "some" state is marked by taking it out from the unmarked set (the first member of the set is picked arbitrarily) and putting it into the marked set.
+</li></ul>
+<p>I hope an example will clear it all up. Let's take our favorite regex - <b>(a|b)*abb</b>, and show how the algorithm runs on the NFA created from it. Here's the NFA again:
+</p><p><img src="./part06_files/n_ababb.jpg" border="0" width="719" height="313" alt="">
+</p><p>Following the algorithm: The start state of the equivalent DFA is the <b>eps-closure</b> of NFA state 0, which is A = {0, 1, 2, 4, 7}. So, we enter into the loop and mark A. A doesn't contain a final state, so we don't add it to the DFA's final set. The input symbol alphabet of the regex <b>(a|b)*abb</b> is {a, b}, so first we compute <span class="code">eps-closure(move(A, a))</span>. Let's expand this:
+</p><p><span class="code">eps-closure(move({0, 1, 2, 4, 7}, a)) = eps-closure({3, 8}) = {1, 2, 3, 4, 6, 7, 8}</span>
+</p><p>Let's call this set B. B is not a member of dfa_states yet, so we add it there, unmarked. We also create the DFA transition <span class="code">D.trans_table(A, a) = B</span>. Now we're back to the inner loop, with the input b. Of all the states in set A, the only transition on b is from 4 to 5, so we create a new set: 
+</p><p><span class="code">C = eps-closure((move(A, b)) = eps-closure({5}) = {1, 2, 4, 5, 6, 7}</span>
+</p><p>So C is added, unmarked, to dfa_states. Since all the alphabet symbols are done for A, we go back to the outer loop. Are there any unmarked states ? Yes, there are B and C. So we pick B and go over the process again and again, until all the sets that are states of the DFA are marked. Then, the algorithm terminates, and <span class="code">D.trans_table</span> contains all the relevant transitions for the DFA. The five different sets we get for DFA states are:
+
+</p><pre class="code">A = {0, 1, 2, 4, 7}
+B = {1, 2, 3, 4, 6, 7, 8}
+C = {1, 2, 4, 5, 6, 7}
+D = {1, 2, 4, 5, 6, 7, 9}
+E = {1, 2, 4, 5, 6, 7, 10}
+</pre>
+
+<p>A is the initial state of the DFA, since it contains the NFA initial state 0. E is obviously the only final state of the NFA, since it's the only one containing the NFA final state 10. If you follow the whole algorithm through and take note of the DFA transitions created, this is the resulting diagram:
+</p><p><img src="./part06_files/dfa.jpg" border="0" width="683" height="378" alt="">
+</p><p>You can easily:
+</p><ol>
+  <li>See that this is a DFA - no <b>eps</b> transitions, no more than a single transition on each input from a state.</li>
+  <li>Verify that it indeed recognizes the regular expression <b>(a|b)*abb</b></li>
+</ol>
+ 
+<h1>That's it, folks!</h1>
+<p>We've come a long way, and finally our mission is accomplished. During the past six columns, we've created a real regular expression engine. It's not a complete engine like the one Lex or Perl have, but it's a start. The basis has been laid, the rest is just extensions. Let's see what we have:</p><p>
+</p><ol>
+  <li>A regular expression is read into a parse tree (implemented in regex_parse.cpp) - I didn't actually explain how this part is done, but you can trust me (and I hope you verified!) that it works.</li>
+  <li>An NFA is built from the regular expression, using Thompson's Construction (implemented in nfa.h/cpp)</li>
+  <li>The NFA is converted to a DFA, using the Subset Construction algorithm (implemented in subset_construct.h/cpp and dfa.h)</li>
+  <li>The resulting DFA is simulated using the DFA simulation algorithm (implemented in dfa.h)</li>
+</ol> 
+<p>A small main function is implemented in regex_parse.cpp. It reads a regex and a string as arguments, and says whether the string fits the regex. It does it by going through the steps mentioned above, so I advise you to take a look at it and make sure that you understand the order in which things are called.
+</p><p>I hope you enjoyed this series, and got some insight into the important topics of regular expressions and Finite Automata (Deterministic and Non-Deterministic). Next time we'll talk about other things, but for now, "See ya" and, as always, questions/feedback/comments are most welcome.
+
+</p><hr><span class="maintext-2">
+© Copyright by Eli Bendersky, 2003. All rights reserved.</span><p></p>
+
+<br><br><br>
+
+
+
+</td>
+<td valign="top">
+
+<table width="100%" cellspacing="0" border="0" cellpadding="4"><tbody><tr><td>
+
+
+
+<table width="170" align="right" cellpadding="2" cellspacing="0" border="0" style="clear: both"><tbody><tr><td align="center">
+
+
+<br><table width="100%" border="0" cellspacing="2" cellpadding="4" class="featmenu"><tbody><tr><td>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+  <tbody><tr valign="top">
+    <td width="24"><img src="./part06_files/print.gif" width="16" height="16" border="0" alt="">&nbsp;</td>
+    <td><a href="https://archive.gamedev.net/archive/reference/articles/article2170.html">Printable version</a></td>
+  </tr>
+
+  <tr valign="top">
+    <td width="24"><img src="./part06_files/discuss.gif" width="16" height="16" border="0" alt="">&nbsp;</td>
+    <td><a href="http://archive.gamedev.net/community/forums/topic.asp?key=featart&amp;uid=2170&amp;forum_id=35&amp;Topic_Title=Algorithmic+Forays+Part+6">Discuss this article</a></td>
+  </tr>
+</tbody></table>
+</td></tr></tbody></table>
+<br>
+
+
+<table width="300" cellpadding="0" cellspacing="0" border="0"><tbody><tr><td>
+<script type="text/javascript">
+GA_googleFillSlot("Box_Main");
+</script>
+</td></tr></tbody></table>
+
+<p><table width="100%" border="0" cellspacing="2" cellpadding="4">
+  <tbody><tr><td valign="top" class="boxheadr">The Series</td></tr>
+  <tr>
+    <td valign="middle" class="featmenu"><table cellspacing="0" cellpadding="0" border="0" width="100%">
+
+      <tbody><tr valign="top">
+        <td><img src="./part06_files/dotsm.gif" width="7" height="6" border="0" alt="">&nbsp;</td>
+        <td><a href="https://archive.gamedev.net/archive/reference/programming/features/af1/index.html">Part 1</a></td>
+      </tr>
+
+      <tr valign="top">
+        <td><img src="./part06_files/dotsm.gif" width="7" height="6" border="0" alt="">&nbsp;</td>
+        <td><a href="https://archive.gamedev.net/archive/reference/programming/features/af2/index.html">Part 2</a></td>
+      </tr>
+
+      <tr valign="top">
+        <td><img src="./part06_files/dotsm.gif" width="7" height="6" border="0" alt="">&nbsp;</td>
+        <td><a href="https://archive.gamedev.net/archive/reference/programming/features/af3/index.html">Part 3</a></td>
+      </tr>
+
+      <tr valign="top">
+        <td><img src="./part06_files/dotsm.gif" width="7" height="6" border="0" alt="">&nbsp;</td>
+        <td><a href="https://archive.gamedev.net/archive/reference/programming/features/af4/index.html">Part 4</a></td>
+      </tr>
+
+      <tr valign="top">
+        <td><img src="./part06_files/dotsm.gif" width="7" height="6" border="0" alt="">&nbsp;</td>
+        <td><a href="https://archive.gamedev.net/archive/reference/programming/features/af5/index.html">Part 5</a></td>
+      </tr>
+
+      <tr valign="top">
+        <td><img src="./part06_files/dotsm.gif" width="7" height="6" border="0" alt="">&nbsp;</td>
+        <td><a href="https://archive.gamedev.net/archive/reference/programming/features/af6/index.html">Part 6</a></td>
+      </tr>
+
+      <tr valign="top">
+        <td><img src="./part06_files/dotsm.gif" width="7" height="6" border="0" alt="">&nbsp;</td>
+        <td><a href="https://archive.gamedev.net/archive/reference/programming/features/af7/index.html">Part 7</a></td>
+      </tr>
+
+      <tr valign="top">
+        <td><img src="./part06_files/dotsm.gif" width="7" height="6" border="0" alt="">&nbsp;</td>
+        <td><a href="https://archive.gamedev.net/archive/reference/programming/features/af8/index.html">Part 8</a></td>
+      </tr>
+
+    </tbody></table></td>
+  </tr>
+</tbody></table>
+
+</p></td></tr></tbody></table>
+
+</td>
+</tr></tbody></table>
+
+</td></tr></tbody></table>
+
+
+</p></div>
+</div>
+
+
+<div id="footer">
+	<span><a href="https://archive.gamedev.net/archive/info/about/index.html">About Us</a> | <a href="https://archive.gamedev.net/archive/info/media/index.html">Advertise on GameDev.net</a> | <a href="https://archive.gamedev.net/archive/info/writers.html">Write for us</a></span>
+	<span>© 1999-2011 Gamedev.net. All rights reserved. <a href="https://archive.gamedev.net/archive/info/legal.html#copyright"><u>Terms of Use</u></a> <a href="https://archive.gamedev.net/archive/info/legal.html#privacy"><u>Privacy Policy</u></a></span>
+	<span class="maintext-2">GameDev.net™, the GameDev.net logo, and GDNet™ are trademarks of GameDev.net, LLC</span>
+    <span class="maintext-1">Comments? Questions? Feedback? <a href="https://archive.gamedev.net/archive/info/faq.html">Click here!</a></span>
+</div>
+
+<script type="text/javascript" src="http://gamedev.us.intellitxt.com/intellitxt/front.asp?ipid=1966&amp;fg=66AA77&amp;mk=4"></script>
+
+
+</body></html>

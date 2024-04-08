@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <cctype>
 #include "nfa.h"
+#include "subset_construct.h"
 
 
 //
@@ -100,9 +101,10 @@ string scanner::preprocess(string in)
 	// don't forget the last char ...
 	//
 	if (c != in.end())
+	{
 		out.push_back(*c);
+	}
 
-	cout << "Scanner's preprocess: " << out << endl;
 	return out;
 }
 
@@ -174,8 +176,6 @@ void print_tree(parse_node* node, unsigned offset)
 NFA tree_to_nfa(parse_node* tree)
 {
 	assert(tree);
-
-	//std::cout << "In tree_to_nfa. Data: " << tree->data << " Type: " << tree->type << std::endl;
 
 	switch (tree->type)
 	{
@@ -331,10 +331,10 @@ int main(int argc, char** argv)
 	sabb.show();
 	*/
 
-	if (argc !=2)
+	if (argc !=3)
 	{
-		cerr << "Call with the regex as an argument" << endl;
-		//cerr << "Usage: " << argv[0] << " <regex> <string>" << endl;
+		//cerr << "Call with the regex as an argument" << endl;
+		cerr << "Usage: " << argv[0] << " <regex> <string>" << endl;
 		exit(1);
 	}
 
@@ -342,7 +342,7 @@ int main(int argc, char** argv)
 
 	// returns a parse tree
 	parse_node* n = expr();
-	print_tree(n,0);
+	//print_tree(n,0);
 
 	if (my_scanner().peek() != 0)
 	{
@@ -354,7 +354,15 @@ int main(int argc, char** argv)
 	NFA nfa = tree_to_nfa(n);
 
 	nfa.show();
+	cout << endl << endl;
 
+	
+	DFA dfa = subset_construct(nfa);
+	
+	dfa.show();
+	cout << endl << endl;
+
+	cout << "Result " << dfa.simulate(argv[2]) << endl;
 
 	return 0;
 }

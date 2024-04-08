@@ -1,8 +1,8 @@
 #include <assert.h>
 #include <iostream>
 #include <string>
-//#include
 #include "nfa.h"
+
 using namespace std;
 NFA::NFA(unsigned size_, state initial_, state final_)
 {
@@ -47,9 +47,9 @@ void NFA::add_trans(state from, state to, input in)
 {
 	assert(is_legal_state(from));
 	assert(is_legal_state(to));
-	// shows question mark chars
-	//std::cout << from << " " << to << " " << (int)in << std::endl;
 	trans_table[from][to] = in;
+	if (in != EPS)
+		inputs.insert(in);
 }
 void NFA::append_empty_state(void)
 {
@@ -89,7 +89,6 @@ void NFA::shift_states(unsigned shift)
 }
 void NFA::fill_states(const NFA& other)
 {
-
 	for (state i=0; i<other.size ; ++i)
 	{
 		for (state j=0; j<other.size ; ++j)
@@ -97,7 +96,20 @@ void NFA::fill_states(const NFA& other)
 			trans_table[i][j] = other.trans_table[i][j];
 		}
 	}
+	for (set<input>::const_iterator i = other.inputs.begin(); i != other.inputs.end(); ++i)
+	{
+		inputs.insert(*i);
+	}
+}
+void NFA::append_input_states(set<input> newInputs)
+{
+	// add each element of newInputs to this nfa's inputs set
+	set<input>::iterator it;
 
+	for(it = newInputs.begin(); it != newInputs.end(); ++it)
+	{
+		inputs.insert(*it);
+	}
 }
 void NFA::show(void)
 {
@@ -124,10 +136,29 @@ void NFA::show(void)
 		}
 	}
 }
+set<state> NFA::move(set<state> states, input inp)
+{
+	set<state> result;
+
+	// for each state in the set of states
+	for (set<state>::const_iterator state_i = states.begin(); state_i != states.end(); ++state_i)
+	{
+		// for each transition from this state
+		for (vector<input>::const_iterator trans_i = trans_table[*state_i].begin(); trans_i != trans_table[*state_i].end(); ++trans_i)
+		{
+			// if transition is on input inp, add it to the resulting set
+			if (*trans_i == inp)
+			{
+				state u = trans_i - trans_table[*state_i].begin();
+				result.insert(u);
+			}
+		}
+	}
+	return result;
+}
 NFA build_nfa_basic(input in)
 {
 	NFA basic(2, 0, 1);
-	//std::cout << in << std::endl;
 	basic.add_trans(0, 1, in);
 	return basic;
 }
@@ -140,6 +171,7 @@ NFA build_nfa_alter(NFA nfa1, NFA nfa2)
 	nfa2.shift_states(nfa1.size);
 
 	// Created new nfa from new larger nfa2
+	// Copies NFA, including input set.
 	NFA new_nfa(nfa2);
 
 	// All nfa1 states copied to new_nfa
@@ -158,6 +190,9 @@ NFA build_nfa_alter(NFA nfa1, NFA nfa2)
 	new_nfa.add_trans(nfa1.final, new_nfa.final, EPS);
 	new_nfa.add_trans(nfa2.final, new_nfa.final, EPS);
 
+	// Append all nfa1 input states to duplicated nfa2
+	new_nfa.append_input_states(nfa1.inputs);
+
 	return new_nfa;
 }
 NFA build_nfa_concat(NFA nfa1, NFA nfa2)
@@ -174,6 +209,9 @@ NFA build_nfa_concat(NFA nfa1, NFA nfa2)
 	// Setting the proper initial
 	new_nfa.initial = nfa1.initial;
 
+	// Append all nfa1 input states to duplicated nfa2
+	new_nfa.append_input_states(nfa1.inputs);
+		
 	return new_nfa;
 }
 NFA build_nfa_star(NFA nfa)
