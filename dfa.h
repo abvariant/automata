@@ -19,8 +19,8 @@ public:
 	// All the inputs this dfa responds to. Inherited from nfa.
 	set<input> inputs;
 
-	DFA();	
-	string simulate(string in);
+	DFA();
+	void simulate(string in);
 
 	void show(void);
 };

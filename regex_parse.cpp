@@ -362,7 +362,7 @@ int main(int argc, char** argv)
 	dfa.show();
 	cout << endl << endl;
 
-	cout << "Result " << dfa.simulate(argv[2]) << endl;
+	dfa.simulate(argv[2]);
 
 	return 0;
 }

@@ -1,6 +1,11 @@
 # automata
 Automata regex tutorial from gamedev.net in C++.
 
+## Usage <BR>
+``./regex2nfa "[REGEX]" "`cat [FILE TO PARSE]`"`` <BR>
+<BR>
+eg:<BR>
+``./regex2nfa "(a|b)*abb" "`cat aaaabb.txt`"``
 
 ## Directories<BR>
 `./reference`<BR>
@@ -18,4 +23,3 @@ http://archive.gamedev.net/archive/reference/articles/article2170.html
 
 Summary article from 2013:<BR>
 https://www.gamedev.net/tutorials/programming/general-and-gameplay-programming/finite-state-machines-and-regular-expressions-r3176/
-
