@@ -9,16 +9,29 @@ DFA::DFA()
 }
 string DFA::simulate(string in)
 {
+	// "start" is nfa.initial, set in nfa constructor.
 	state cur_state = start;
 
 	for (string::const_iterator i = in.begin(); i != in.end(); ++i)
 	{
-		transition trans = make_pair(cur_state, *i);
-		if (trans_table.find(trans) == trans_table.end())
+		// if the current character is not in the input set,
+		// reset current state to start state
+		if(inputs.find(*i) == inputs.end())
 		{
-			return "REJECT";
+			cur_state = start;
 		}
-		cur_state = trans_table[trans];
+		else
+		{
+			transition trans = make_pair(cur_state, *i);
+
+			// If transition isn't found, it returns trans_table.end()
+			// There isn't a transition for any unknown chars so this always rejects.
+			if (trans_table.find(trans) == trans_table.end())
+			{
+				return "REJECT";
+			}
+			cur_state = trans_table[trans];
+		}
 	}
 
 	if (final.find(cur_state) != final.end())

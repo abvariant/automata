@@ -16,6 +16,9 @@ public:
 	state start;
 	set<state> final;
 
+	// All the inputs this dfa responds to. Inherited from nfa.
+	set<input> inputs;
+
 	DFA();	
 	string simulate(string in);
 

@@ -105,6 +105,9 @@ DFA subset_construct(NFA nfa)
 
 	}
 
+	// inputs that dfa accepts are the same as that of the nfa
+	dfa.inputs = nfa.inputs;
+
 	return dfa;
 }
 
